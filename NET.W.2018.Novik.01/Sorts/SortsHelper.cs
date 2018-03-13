@@ -34,7 +34,9 @@ namespace Sorts
 
             for (int i = 0; i < result.Length; i++)
             {
+                // if left array is empty , then add elemnt from right array
                 if (indexLeft >= left.Length) { result[i] = right[indexRight++]; continue; }
+                // if right array is empty , then add elemnt from left array
                 if (indexRight >= right.Length) { result[i] = left[indexLeft++]; continue; }
 
                 if (right[indexRight] >= left[indexLeft])
@@ -58,18 +60,20 @@ namespace Sorts
             innerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
         }
 
-        private static void innerQuickSort(int[] array, int left, int right)
+        private static void innerQuickSort(int[] array, int start, int end)
         {
-            int i = left, j = right;
-            int halfElement = array[left + (right - left >> 1)];
+            int i = start, j = end;
+            int halfElement = array[start + (end - start >> 1)];
 
             while (i <= j)
             {
+                // find element less than half
                 while (array[i] < halfElement)
                 {
                     i++;
                 }
 
+                // find element bigger than half
                 while (array[j] > halfElement)
                 {
                     j--;
@@ -77,7 +81,6 @@ namespace Sorts
 
                 if (i <= j)
                 {
-                    // Swap
                     int tmp = array[i];
                     array[i] = array[j];
                     array[j] = tmp;
@@ -87,15 +90,15 @@ namespace Sorts
                 }
             }
 
-            // Recursive calls
-            if (left < j)
+            // if left part of array has not order , then do sort again
+            if (start < j)
             {
-                innerQuickSort(array, left, j);
+                innerQuickSort(array, start, j);
             }
-
-            if (i < right)
+            // if right part of array has not order , then do sort again
+            if (i < end)
             {
-                innerQuickSort(array, i, right);
+                innerQuickSort(array, i, end);
             }
         }
         #endregion
