@@ -1,32 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="SortsHelper.cs" company="Epam">
+//     Copyright (c) Epam. All rights reserved.
+// </copyright>
+// <author>Novik Ilya</author>
+//-----------------------------------------------------------------------
 namespace Sorts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Contains implementation algorithms:
+    /// Merge sort
+    /// Quick sort
+    /// </summary>
     public class SortsHelper
     {
-
         #region Merge Sort
         /// <summary>
-        /// Merge Sort
+        /// Implementation algorithm  Merge Sort (via inner method InnerMergeSort)
         /// </summary>
-        /// <param name="array"></param>
-        /// <returns></returns>
+        /// <param name="array">Array type of int</param>
+        /// <returns>Sorted array</returns>
         public static int[] MergerSort(int[] array)
         {
-            return innerMergeSort(array, 0, array.Length - 1); // invoke inner mergersort
+            return InnerMergeSort(array, 0, array.Length - 1); // invoke inner mergersort
         }
-        public static int[] innerMergeSort(int[] array, int start, int end)
+
+        /// <summary>
+        /// Inner impelementation algorithm of Merge Sort. Used for recurcive calls.
+        /// </summary>
+        /// <param name="array">Input array of integer numbers</param>
+        /// <param name="start">Begin point of array</param>
+        /// <param name="end">End point of array</param>
+        /// <returns>Sorted array</returns>
+        public static int[] InnerMergeSort(int[] array, int start, int end)
         {
-            if (start >= end) return new int[] { array[start] };
+            if (start >= end)
+            {
+                return new int[] { array[start] };
+            }
 
-            int middle = start + (end - start >> 1);
+            int middle = start + ((end - start) >> 1);
 
-            int[] left = innerMergeSort(array, start, middle);
-            int[] right = innerMergeSort(array, middle + 1, end);
+            int[] left = InnerMergeSort(array, start, middle);
+            int[] right = InnerMergeSort(array, middle + 1, end);
             int[] result = new int[left.Length + right.Length];
 
             int indexLeft = 0;
@@ -34,15 +55,32 @@ namespace Sorts
 
             for (int i = 0; i < result.Length; i++)
             {
-                // if left array is empty , then add elemnt from right array
-                if (indexLeft >= left.Length) { result[i] = right[indexRight++]; continue; }
-                // if right array is empty , then add elemnt from left array
-                if (indexRight >= right.Length) { result[i] = left[indexLeft++]; continue; }
+                /*
+                 * if left array is empty , then add elemnt from right array
+                 */
+                if (indexLeft >= left.Length)  
+                {
+                    result[i] = right[indexRight++];
+                    continue;
+                }
+
+                /*
+                 * if right array is empty , then add elemnt from left array 
+                 */
+                if (indexRight >= right.Length)
+                {
+                    result[i] = left[indexLeft++];
+                    continue;
+                }
 
                 if (right[indexRight] >= left[indexLeft])
-                { result[i] = left[indexLeft++]; }
+                {
+                    result[i] = left[indexLeft++];
+                }
                 else
-                { result[i] = right[indexRight++]; }
+                {
+                    result[i] = right[indexRight++];
+                }
             }
 
             return result;
@@ -52,29 +90,36 @@ namespace Sorts
 
         #region Quick Sort
         /// <summary>
-        /// Quick Sort
+        /// Implementation algorithm Quick Sort (via inner method InnerQuickSort)
         /// </summary>
-        /// <param name="array"></param>
+        /// <param name="array">Array type of int</param>
         public static void QuickSort(int[] array)
         {
-            innerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
+            InnerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
         }
 
-        private static void innerQuickSort(int[] array, int start, int end)
+        /// <summary>
+        /// Inner impelementation algorithm of Quick Sort. Used for recurcive calls.
+        /// </summary>
+        /// <param name="array">Input array of integer numbers</param>
+        /// <param name="start">Begin point of array</param>
+        /// <param name="end">End point of array</param>
+        private static void InnerQuickSort(int[] array, int start, int end)
         {
             int i = start, j = end;
-            int halfElement = array[start + (end - start >> 1)];
+            int middle = start + ((end - start) >> 1);
+            int middleElement = array[middle];
 
             while (i <= j)
             {
                 // find element less than half
-                while (array[i] < halfElement)
+                while (array[i] < middleElement)
                 {
                     i++;
                 }
 
                 // find element bigger than half
-                while (array[j] > halfElement)
+                while (array[j] > middleElement)
                 {
                     j--;
                 }
@@ -90,18 +135,22 @@ namespace Sorts
                 }
             }
 
-            // if left part of array has not order , then do sort again
+            /*
+             * if left part of array has not order , then do sort again
+             */
             if (start < j)
             {
-                innerQuickSort(array, start, j);
+                InnerQuickSort(array, start, j);
             }
-            // if right part of array has not order , then do sort again
+
+            /*
+             * if right part of array has not order , then do sort again
+             */           
             if (i < end)
             {
-                innerQuickSort(array, i, end);
+                InnerQuickSort(array, i, end);
             }
         }
         #endregion
-
     }
 }

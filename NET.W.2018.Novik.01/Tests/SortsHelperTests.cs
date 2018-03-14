@@ -5,29 +5,31 @@ using System.Linq;
 
 namespace Tests
 {
+    /// <summary>
+    /// Tests Sorts.SortsHelper.cs
+    /// </summary>
     [TestClass]
-    public class UnitTestSorts
+    public class SortsHelperTests
     {
-        /// <summary>
-        /// Test kind of sort from Sorts.SortsHelper
-        /// </summary>
-        
+
         [TestMethod]
-        public void TestMegreSort()
+        public void MegreSort_InputArrayIntegerNumbers_SortedArrayReturned()
         {
             //Arrange
-            int[] arrayGoal = new int[] { 1, 2, 3, 4, 5, 6 };
-            int[] arrayInput = new int[] { 1, 4, 3, 5, 6, 2 };
+            int[] arrExpected = new int[] { 1, 2, 3, 4, 5, 6 };
+            int[] arrInput = new int[] { 1, 4, 3, 5, 6, 2 };
 
             //Act
-            arrayInput = SortsHelper.MergerSort(arrayInput);
+            arrInput = SortsHelper.MergerSort(arrInput);
 
             //Assert
-            Assert.IsTrue(arrayGoal.SequenceEqual(arrayInput));
+            Assert.IsTrue(arrExpected.SequenceEqual(arrInput));
         }
 
+
+
         [TestMethod]
-        public void TestQuickSort()
+        public void QuickSort_InputArrayIntegerNumbers_SortedArrayReturned()
         {
             //Arrange
             int[] arrayGoal = new int[] { 1, 2, 3, 4, 5, 6 };
