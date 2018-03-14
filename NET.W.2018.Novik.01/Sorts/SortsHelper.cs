@@ -37,7 +37,7 @@ namespace Sorts
         /// <param name="start">Begin point of array</param>
         /// <param name="end">End point of array</param>
         /// <returns>Sorted array</returns>
-        public static int[] InnerMergeSort(int[] array, int start, int end)
+        private static int[] InnerMergeSort(int[] array, int start, int end)
         {
             if (start >= end)
             {

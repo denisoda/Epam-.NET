@@ -21,6 +21,7 @@ namespace Tests
 
             //Act
             arrInput = SortsHelper.MergerSort(arrInput);
+            
 
             //Assert
             Assert.IsTrue(arrExpected.SequenceEqual(arrInput));
