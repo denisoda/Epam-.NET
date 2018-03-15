@@ -10,7 +10,7 @@ namespace Tasks
     {
         public static double FindNthRoot()
         {
-            return 0;
+            return 10;
         }
     }
 }
