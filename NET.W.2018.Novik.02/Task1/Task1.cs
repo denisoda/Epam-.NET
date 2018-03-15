@@ -22,8 +22,8 @@ namespace Tasks
         /// <param name="end">right bodrder</param>
         /// <exception cref="ArgumentException">
         /// Thrown when <paramref name="start"/> greater than <paramref name="end"/> or
-        /// (<paramref name="start"/> &lt; 0) || (<paramref name="start"/> &gt; 32) 
-        /// || (<paramref name="end"/> &lt; 0) || (<paramref name="end"/> &gt; 32).
+        /// (<paramref name="start"/> &lt; 0) || (<paramref name="start"/> &gt; 31) 
+        /// || (<paramref name="end"/> &lt; 0) || (<paramref name="end"/> &gt; 31).
         /// </exception>
         /// <returns>number is the number source contains bits of the number in</returns>
         public static int InsertNumber(int numberSource, int numberInsert, int start, int end)
