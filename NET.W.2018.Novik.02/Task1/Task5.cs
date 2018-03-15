@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task1
+namespace Tasks
 {
-    public class Solution
+    class Task5
     {
-
+        public static double FindNthRoot()
+        {
+            return 0;
+        }
     }
 }
