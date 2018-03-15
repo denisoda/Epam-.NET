@@ -27,8 +27,6 @@ namespace Tests
             Assert.IsTrue(arrExpected.SequenceEqual(arrInput));
         }
 
-
-
         [TestMethod]
         public void QuickSort_InputArrayIntegerNumbers_SortedArrayReturned()
         {

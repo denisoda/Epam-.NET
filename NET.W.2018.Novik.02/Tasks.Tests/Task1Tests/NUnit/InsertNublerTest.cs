@@ -30,19 +30,12 @@ namespace Tasks.Tests.Task1Tests.NUnit
         [TestCase(8, 15, -1, 0)]
         [TestCase(15, 15, 10, 9)]
         [TestCase(8, 15, 32, 32)]
-        public void InsertNumber_InputWrongValues_NUnit(int source, int insert, int j, int i)
+        public void InsertNumber_InputWrongValues_Exception_NUnit(int source, int insert, int j, int i)
         {
             //Arrange
-            try
-            {
-                //Act
-                Task1.InsertNumber(source, insert, j, i);
-                Assert.Fail();
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.IsTrue(true, ex.Message);
-            }
+
+            //Act
+            Assert.Throws<ArgumentException>(() => Task1.InsertNumber(source, insert, j, i));
         }
     }
 }

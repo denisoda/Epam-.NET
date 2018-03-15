@@ -43,17 +43,11 @@ namespace Tasks.Tests.Task2Tests
             //Arrange
 
             //Act
-            try
-            {
-                int result = Task2.FindNextBiggerNumber(number);
-                Assert.Fail();
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.Pass(ex.Message);
-            }
+            
+            //Assert
+            Assert.Throws<ArgumentException>(() => Task2.FindNextBiggerNumber(number));
+
+
         }
-
-
     }
 }
