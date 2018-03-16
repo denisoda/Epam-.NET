@@ -7,6 +7,7 @@
 namespace Tasks
 {
     using System;
+    using System.Linq;
 
     /// <summary>
     /// Implementation task 2 (FindNextBiggerNumber)
@@ -40,6 +41,12 @@ namespace Tasks
             }
 
             int[] arrDigits = ConvertIntToArrayDigits(number); // Using inner method
+
+            if (isOrderDescending(arrDigits))
+            {
+                return -1;
+            }
+
             bool hasFound = false; // The required number has found
             int size = 0; // Size of range
             int indexStartPoint = arrDigits.Length - 1;
@@ -63,21 +70,13 @@ namespace Tasks
                 size++;
             }
 
-            // If the required number has found
-            if (hasFound)
-            {
-                // Sort part digits of number
-                if (indexStartSort != arrDigits.Length - 1)
-                {
+             // Sort part digits of number
+             if (size > 1)
+             {
                     SortsHelper.QuickSort(arrDigits, indexStartSort, arrDigits.Length - 1); // User quick sort
-                }
+             }
 
-                return Convert.ToInt32(string.Concat(arrDigits));
-            }
-            else
-            {
-                return -1;
-            }
+             return Convert.ToInt32(string.Concat(arrDigits));
         }
 
         #endregion
@@ -101,6 +100,26 @@ namespace Tasks
             }
 
             return resultArray;
+        }
+
+        /// <summary>
+        /// Check array is order descending
+        /// </summary>
+        /// <param name="array">Array</param>
+        /// <returns>Bool</returns>
+        private static bool isOrderDescending(int[] array)
+        {
+            bool result = true;
+            for (int i = 0; i < array.Length-1; i++)
+            {
+                if (array[i] < array[i + 1])
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
 
         #endregion
