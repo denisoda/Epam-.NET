@@ -42,7 +42,7 @@ namespace Tasks
 
             int[] arrDigits = ConvertIntToArrayDigits(number); // Using inner method
 
-            if (isOrderDescending(arrDigits))
+            if (IsOrderDescending(arrDigits))
             {
                 return -1;
             }
@@ -50,7 +50,6 @@ namespace Tasks
             bool hasFound = false; // The required number has found
             int size = 0; // Size of range
             int indexStartPoint = arrDigits.Length - 1;
-            int indexStartSort = 0;
 
             while (!hasFound && size < arrDigits.Length - 1)
             {
@@ -61,7 +60,6 @@ namespace Tasks
                         int temp = arrDigits[k];
                         arrDigits[k] = arrDigits[indexStartPoint - size - 1];
                         arrDigits[indexStartPoint - size - 1] = temp;
-                        indexStartSort = indexStartPoint - size;
                         hasFound = true;
                         break;
                     }
@@ -73,7 +71,7 @@ namespace Tasks
              // Sort part digits of number
              if (size > 1)
              {
-                    SortsHelper.QuickSort(arrDigits, indexStartSort, arrDigits.Length - 1); // User quick sort
+                    SortsHelper.QuickSort(arrDigits, --size, arrDigits.Length - 1); // Use quick sort
              }
 
              return Convert.ToInt32(string.Concat(arrDigits));
@@ -107,10 +105,10 @@ namespace Tasks
         /// </summary>
         /// <param name="array">Array</param>
         /// <returns>Bool</returns>
-        private static bool isOrderDescending(int[] array)
+        private static bool IsOrderDescending(int[] array)
         {
             bool result = true;
-            for (int i = 0; i < array.Length-1; i++)
+            for (int i = 0; i < array.Length - 1; i++)
             {
                 if (array[i] < array[i + 1])
                 {
