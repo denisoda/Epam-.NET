@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Tasks;
 
 namespace Tasks.Tests.Task4Tests
 {
+    [TestFixture]
     class FilterDigitTest
     {
         [Test]
@@ -19,7 +18,7 @@ namespace Tasks.Tests.Task4Tests
             IEnumerable<int> expected = new List<int> { 7, 70, 17 };
 
             //Act
-            IEnumerable<int> result = Task4.FilterDigit(source, digit);
+            IEnumerable<int> result = Task4.FilterDigits(source, digit);
 
             //Assert
             Assert.IsTrue(expected.SequenceEqual(result));

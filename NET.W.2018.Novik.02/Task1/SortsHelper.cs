@@ -19,7 +19,8 @@ namespace Tasks
     /// </summary>
     public class SortsHelper
     {
-        #region Merge Sort
+        #region public methods
+
         /// <summary>
         /// Implementation algorithm  Merge Sort (via inner method InnerMergeSort)
         /// </summary>
@@ -29,6 +30,40 @@ namespace Tasks
         {
             return InnerMergeSort(array, 0, array.Length - 1); // invoke inner mergersort
         }
+
+        /// <summary>
+        /// Implementation algorithm Quick Sort (via inner method InnerQuickSort)
+        /// </summary>
+        /// <param name="array">Array type of int</param>
+        public static void QuickSort(int[] array)
+        {
+            InnerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
+        }
+
+        /// <summary>
+        /// Inner impelementation algorithm of Quick Sort. Used for recurcive calls.
+        /// </summary>
+        /// <param name="array">Input array of integer numbers</param>
+        /// <param name="start">Begin point of array</param>
+        /// <param name="end">End point of array</param>
+        public static void QuickSort(int[] array, int start, int end)
+        {
+            if (start < 0 || end > array.Length - 1)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (start >= end)
+            {
+                throw new ArgumentException();
+            }
+
+            InnerQuickSort(array, start, end); // invoke inner quicksort
+        }
+
+        #endregion
+
+        #region private methods
 
         /// <summary>
         /// Inner impelementation algorithm of Merge Sort. Used for recurcive calls.
@@ -58,14 +93,14 @@ namespace Tasks
                 /*
                  * if left array is empty , then add elemnt from right array
                  */
-                if (indexLeft >= left.Length)  
+                if (indexLeft >= left.Length)
                 {
                     result[i] = right[indexRight++];
                     continue;
                 }
 
                 /*
-                 * if right array is empty , then add elemnt from left array 
+                 * if right array is empty , then add elemnt from left array
                  */
                 if (indexRight >= right.Length)
                 {
@@ -84,33 +119,6 @@ namespace Tasks
             }
 
             return result;
-        }
-
-        #endregion
-
-        #region Quick Sort
-        /// <summary>
-        /// Implementation algorithm Quick Sort (via inner method InnerQuickSort)
-        /// </summary>
-        /// <param name="array">Array type of int</param>
-        public static void QuickSort(int[] array)
-        {
-            InnerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
-        }
-
-        public static void QuickSort(int[] array, int start, int end)
-        {
-            if (start < 0 || end > array.Length - 1 )
-            {
-                throw new IndexOutOfRangeException();
-            }
-
-            if (start >= end)
-            {
-                throw new ArgumentException();
-            }
-
-            InnerQuickSort(array, start, end); // invoke inner quicksort
         }
 
         /// <summary>
@@ -160,7 +168,7 @@ namespace Tasks
 
             /*
              * if right part of array has not order , then do sort again
-             */           
+             */
             if (i < end)
             {
                 InnerQuickSort(array, i, end);

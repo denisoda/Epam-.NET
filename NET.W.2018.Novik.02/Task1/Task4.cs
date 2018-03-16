@@ -1,18 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Task4.cs" company="Epam training">
+//     Copyright (c) Epam training. All rights reserved.
+// </copyright>
+// <author>Novik Ilya</author>
+//-----------------------------------------------------------------------
 namespace Tasks
 {
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Implementation task 4 (FilterDigit)
+    /// </summary>
     public class Task4
     {
-        public static List<int> FilterDigit(IEnumerable<int> list, int digit)
+        #region public methods
+
+        /// <summary>
+        /// Find numbers which has <paramref name="digit"/>
+        /// </summary>
+        /// <param name="sequence">Input sequence</param>
+        /// <param name="digit">Digit</param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="digit"/> is not a positive digit
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="sequence"/> is null
+        /// </exception>
+        /// <returns>Sequence has numbers which contains <paramref name="digit"/></returns>
+        public static List<int> FilterDigits(IEnumerable<int> sequence, int digit)
         {
-            if (list == null)
+            if (sequence == null)
             {
-                throw new ArgumentNullException($"{nameof(list)} must be not null");
+                throw new ArgumentNullException($"{nameof(sequence)} must be not null");
             }
 
             if (digit < 0 || digit > 9)
@@ -23,7 +43,7 @@ namespace Tasks
             List<int> result = new List<int>();
             string strDigit = Convert.ToString(digit);
 
-            foreach (var item in list)
+            foreach (var item in sequence)
             {
                 string str = Convert.ToString(item);
                 if (str.Contains(strDigit))
@@ -34,5 +54,7 @@ namespace Tasks
 
             return result;
         }
+
+        #endregion
     }
 }

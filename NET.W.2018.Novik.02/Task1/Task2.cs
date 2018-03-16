@@ -9,65 +9,67 @@ namespace Tasks
     using System;
 
     /// <summary>
-    /// Implementation task 2
+    /// Implementation task 2 (FindNextBiggerNumber)
     /// </summary>
     public class Task2
     {
+        #region public methods
+
         /// <summary>
-        /// Find the closest number that greater than <paramref name="initialNumber"/>.
+        /// Find the closest number that greater than <paramref name="number"/> that contains only <paramref name="number"/> digits.
         /// </summary>
-        /// <param name="initialNumber">Number.</param>
+        /// <param name="number">Number.</param>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="initialNumber"/> is a negative number
+        /// Thrown when <paramref name="number"/> is a negative number
         /// </exception>
-        /// <returns>Number.If number has not found then return -1.</returns>
-        public static int FindNextBiggerNumber(int initialNumber)
+        /// <returns>
+        /// Number.
+        /// If required number has not found return -1.
+        /// </returns>
+        public static int FindNextBiggerNumber(int number)
         {
-            if (initialNumber < 0)
+            if (number < 0)
             {
-                throw new ArgumentException($"{nameof(initialNumber)} must be possitive number");
+                throw new ArgumentException($"{nameof(number)} must be positive number");
             }
 
-            if (initialNumber < 11)
+            // Numbers from 0 to 11 have not the required number
+            if (number < 11)
             {
                 return -1;
             }
 
-            string numberStr = Convert.ToString(initialNumber);
-            int[] arrDigits = new int[numberStr.Length];
-
-            for (int si = 0; si < numberStr.Length; si++)
-            {
-                arrDigits[si] = int.Parse(numberStr[si].ToString());
-            }
-
-            bool hasFound = false;
-            int i = 0;
+            int[] arrDigits = ConvertIntToArrayDigits(number); // Using inner method
+            bool hasFound = false; // The required number has found
+            int size = 0; // Size of range
             int indexStartPoint = arrDigits.Length - 1;
-            int indexFindNumber = 0;
-            while (!hasFound && i < arrDigits.Length - 1)
+            int indexStartSort = 0;
+
+            while (!hasFound && size < arrDigits.Length - 1)
             {
-                for (int k = indexStartPoint; k >= indexStartPoint - i; k--)
+                for (int k = indexStartPoint; k >= indexStartPoint - size; k--)
                 {
-                    if (arrDigits[k]  > arrDigits[indexStartPoint - i - 1])
+                    if (arrDigits[k] > arrDigits[indexStartPoint - size - 1])
                     {
                         int temp = arrDigits[k];
-                        arrDigits[k] = arrDigits[indexStartPoint - i - 1];
-                        arrDigits[indexStartPoint - i - 1] = temp;
-                        indexFindNumber = indexStartPoint - i;
+                        arrDigits[k] = arrDigits[indexStartPoint - size - 1];
+                        arrDigits[indexStartPoint - size - 1] = temp;
+                        indexStartSort = indexStartPoint - size;
                         hasFound = true;
                         break;
                     }
                 }
 
-                i++;
+                size++;
             }
 
+            // If the required number has found
             if (hasFound)
             {
-                if (indexFindNumber != arrDigits.Length - 1)
+                // Sort part digits of number
+                if (indexStartSort != arrDigits.Length - 1)
                 {
-                    SortsHelper.QuickSort(arrDigits, indexFindNumber, arrDigits.Length - 1);
+                    SortsHelper.QuickSort(arrDigits, indexStartSort, arrDigits.Length - 1); // User quick sort
                 }
 
                 return Convert.ToInt32(string.Concat(arrDigits));
@@ -77,5 +79,30 @@ namespace Tasks
                 return -1;
             }
         }
+
+        #endregion
+
+        #region private methods
+
+        /// <summary>
+        /// Convert number to array digits
+        /// </summary>
+        /// <param name="number">Number.</param>
+        /// <returns>Array digits.</returns>
+        private static int[] ConvertIntToArrayDigits(int number)
+        {
+            string numberStr = Convert.ToString(number);
+
+            int[] resultArray = new int[numberStr.Length];
+
+            for (int si = 0; si < numberStr.Length; si++)
+            {
+                resultArray[si] = int.Parse(numberStr[si].ToString());
+            }
+
+            return resultArray;
+        }
+
+        #endregion
     }
 }

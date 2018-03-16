@@ -14,6 +14,8 @@ namespace Tasks
     /// </summary>
     public class Task3
     {
+        #region public methods
+
         /// <summary>
         /// Return time lead of method Tasks.Task2.FindNextBiggerNumber
         /// </summary>
@@ -27,5 +29,7 @@ namespace Tasks
             sw.Stop();
             return sw;
         }
+
+        #endregion
     }
 }

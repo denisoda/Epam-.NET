@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Tasks;
 
@@ -26,8 +23,6 @@ namespace Tasks.Tests.Task2Tests
         [TestCase(0, -1)]
         public void FindNextBiggerNumber_CorrectValues(int number, int expected)
         {
-            //Arrange
-
             //Act
             int result = Task2.FindNextBiggerNumber(number);
 
@@ -40,14 +35,8 @@ namespace Tasks.Tests.Task2Tests
         [TestCase(-5)]
         public void FindNextBiggerNumber_WrongValues_ReturnException(int number)
         {
-            //Arrange
-
-            //Act
-            
-            //Assert
-            Assert.Throws<ArgumentException>(() => Task2.FindNextBiggerNumber(number));
-
-
+            Assert.Throws<ArgumentException>(
+                () => Task2.FindNextBiggerNumber(number));
         }
     }
 }

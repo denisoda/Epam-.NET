@@ -58,8 +58,8 @@
     <Compile Include="Task2Tests\FindNextBiggerNumberTest.cs" />
     <Compile Include="Task3Tests\GetLeadTimeFindNextBiggerNumberTest.cs" />
     <Compile Include="Task4Tests\FilterDigitTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Task5Tests\FindNthRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
