@@ -1,5 +1,4 @@
 ﻿## Задание 1.
-```
 
 Разработать класс, позволяющий выполнять вычисления НОД по алгоритму
 Евклида для двух, трех и т.д. целых чисел. Методы класса помимо вычисления НОД
@@ -11,12 +10,12 @@
 
 ### Файлы
 
-* [GCD.cs](/Tasks/GCD.cs) - Implementation
-* [GCDTests.cs](/Tasks.Tests/GCDTests.cs) - Tests (NUnit)
+* [GCD.cs](/NET.W.2018.Novik.03-04/Tasks/GCD.cs) - Implementation
+* [GCDTests.cs](/NET.W.2018.Novik.03-04/Tasks.Tests/GCDTests.cs) - Tests (NUnit)
 
 
 ### Задание 2.
-``` 
+
 
 Реализовать метод расширения для получения строкового двоичного
 представления вещественного числа двойной точности в формате IEEE 754
@@ -25,5 +24,5 @@
 
 ### Файлы
 
-* [DoubleToBitsString.cs](/Tasks/DoubleToBitsString.cs) - Implementation
-* [ConvertToBitsStringTests.cs](/Tasks.Tests/ConverterToBitsStringTests.cs) - Tests (NUnit)
+* [DoubleToBitsString.cs](/NET.W.2018.Novik.03-04/Tasks/DoubleToBitsString.cs) - Implementation
+* [ConvertToBitsStringTests.cs](/NET.W.2018.Novik.03-04/Tasks.Tests/ConverterToBitsStringTests.cs) - Tests (NUnit)

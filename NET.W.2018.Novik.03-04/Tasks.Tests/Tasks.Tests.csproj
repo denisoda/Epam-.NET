@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GCDTests.cs" />
-    <Compile Include="ConvertToBitsStringTests.cs" />
+    <Compile Include="DoubleToBitsStringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

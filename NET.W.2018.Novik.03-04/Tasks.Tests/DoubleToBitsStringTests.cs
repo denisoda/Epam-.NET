@@ -5,7 +5,7 @@ using static Tasks.DoubleToBitsString;
 namespace Tasks.Tests
 {
     [TestFixture]
-    public class ConvertToBitsStringTests
+    public class DoubleToBitsStringTests
     {
         [Test]
         [TestCase(-255.255, ExpectedResult = "1100000001101111111010000010100011110101110000101000111101011100")]
@@ -21,7 +21,7 @@ namespace Tasks.Tests
         [TestCase(0.0, ExpectedResult = "0000000000000000000000000000000000000000000000000000000000000000")]
         [TestCase(0.004375, ExpectedResult = "0011111101110001111010111000010100011110101110000101000111101100")]
         [TestCase(11.123, ExpectedResult = "0100000000100110001111101111100111011011001000101101000011100101")]
-        public string DoubleToBitsString(double value)
+        public string DoubleToBitsString_CorrectValue(double value)
         {
             return value.ToBitsString();
         }
