@@ -33,16 +33,13 @@ namespace Tasks
         /// <returns>The string value.</returns>
         public static string ToBitsString(this double value)
         {
-            string result = string.Empty;
-
             int sign = GetSignBit(value);
             value = sign == 1 ? Math.Abs(value) : value;
             int order = GetOrder(value);
             int[] orderBinary = IntToBinaryArray(order, LengthDoubleOrder);
             int[] mantissaBinary = GetMantissaBinaryArray(GetMantissa(value, order));
 
-            result = string.Concat(sign, string.Concat(orderBinary), string.Concat(mantissaBinary));
-            return result;
+            return string.Concat(sign, string.Concat(orderBinary), string.Concat(mantissaBinary));
         }
 
         #endregion // public methods

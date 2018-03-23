@@ -25,4 +25,4 @@
 ### Файлы
 
 * [DoubleToBitsString.cs](/NET.W.2018.Novik.03-04/Tasks/DoubleToBitsString.cs) - Implementation
-* [ConvertToBitsStringTests.cs](/NET.W.2018.Novik.03-04/Tasks.Tests/ConverterToBitsStringTests.cs) - Tests (NUnit)
+* [DoubleToBitsStringTests.cs](/NET.W.2018.Novik.03-04/Tasks.Tests/DoubleToBitsStringTests.cs) - Tests (NUnit)

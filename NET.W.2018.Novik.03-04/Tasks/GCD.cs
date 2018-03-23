@@ -119,7 +119,7 @@ namespace Tasks
         /// <summary>
         /// Computing the greatest common divisor of set of integers by Stein's algorithm.
         /// </summary>
-        /// <param name="time">Out parameter to compute lead time.</param>
+        /// <param name="time">The out parameter to compute lead time.</param>
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <param name="numbers">The numbers to compute.</param>
@@ -132,7 +132,7 @@ namespace Tasks
         /// <summary>
         /// Computing the greatest common divisor of set of integers by Stein's algorithm.
         /// </summary>
-        /// <param name="time">Out parameter to compute lead time.</param>
+        /// <param name="time">The out parameter to compute lead time.</param>
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <returns>The greatest common divisor number.</returns>
@@ -229,8 +229,6 @@ namespace Tasks
             time = stopwatch.Elapsed;
             return result;
         }
-
-        private bool IsEven(int number) => (number % 2) == 0;
 
         #endregion // private methods
     }
