@@ -15,13 +15,13 @@ namespace Tasks.Tests
         [TestCase(24, 50, 72, ExpectedResult = 2)]
         public int Euclidean_CorrectArguments(int number1, int number2, params int[] numbers)
         {
-            return (new GCD()).Euclidean(number1, number2, numbers);
+            return GCD.Euclidean(number1, number2, numbers);
         }
 
         [Test]
         public void Euclidean_NullArgument_ArgumentsNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => (new GCD()).Euclidean(4, 16, null));
+            Assert.Throws<ArgumentNullException>(() => GCD.Euclidean(4, 16, null));
         }
 
         [Test]
@@ -30,9 +30,8 @@ namespace Tasks.Tests
         [TestCase(24, 50, 72)]
         public void Euclidean_LeadTime_Less1s(int number1, int number2, params int[] numbers)
         {
-            GCD task1 = new GCD();
             TimeSpan time = new TimeSpan();
-            int result = task1.Euclidean(out time,number1, number2, numbers);
+            int result = GCD.Euclidean(out time,number1, number2, numbers);
 
             Assert.IsTrue(time.Seconds <= 1 , $"Lead time is {time.ToString()}");
         }
@@ -47,7 +46,7 @@ namespace Tasks.Tests
         [TestCase(24, 50, 72, ExpectedResult = 2)]
         public int Stein_CorrectArguments(int number1, int number2, params int[] numbers)
         {
-            return (new GCD()).Stein(number1, number2, numbers);
+            return GCD.Stein(number1, number2, numbers);
         }
 
         [Test]
@@ -56,9 +55,8 @@ namespace Tasks.Tests
         [TestCase(24, 50, 72)]
         public void Stein_LeadTime_Less1s(int number1, int number2, params int[] numbers)
         {
-            GCD task1 = new GCD();
             TimeSpan time = new TimeSpan();
-            int result = task1.Stein(out time, number1, number2, numbers);
+            int result = GCD.Stein(out time, number1, number2, numbers);
 
             Assert.IsTrue(time.Seconds <= 1, $"Lead time is {time.ToString()}");
         }

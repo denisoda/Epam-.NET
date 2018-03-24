@@ -1,13 +1,7 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Task5.cs" company="Epam training">
-//     Copyright (c) Epam training. All rights reserved.
-// </copyright>
-// <author>Novik Ilya</author>
-//-----------------------------------------------------------------------
+﻿using System;
+
 namespace Tasks
 {
-    using System;
-
     /// <summary>
     /// Implementation task 5
     /// </summary>
@@ -16,16 +10,15 @@ namespace Tasks
         #region public methods
 
         /// <summary>
-        /// Сalculate the nth root of the number
+        /// Сalculate the nth root of the number.
         /// </summary>
         /// <param name="number">Number.</param>
         /// <param name="root">Root.</param>
         /// <param name="eps">Accuracy.</param>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="root"/> is less than 0
-        /// Thrown when <paramref name="eps"/> is less than 0
-        /// Thrown when <paramref name="number"/> is less than 0 and
-        /// <paramref name="root"/> is a even number
+        /// <paramref name="root"/> is less than 0.
+        /// <paramref name="eps"/> is less than 0.
+        /// <paramref name="number"/> is less than 0 and <paramref name="root"/> is a even number.
         /// </exception>
         /// <returns>The nth root of the number></returns>
         public static double FindNthRoot(double number, int root, double eps)
@@ -45,7 +38,7 @@ namespace Tasks
                 throw new ArgumentException($"{nameof(eps)} must be greater than 0", nameof(eps));
             }
 
-            Func<double, double, int, double> nextNumber = (n, x, r) => (1.0 / r) * (((r - 1) * x) + (n / Math.Pow(x, r - 1)));
+            double nextNumber(double n, double x, int r) => (1.0 / r) * (((r - 1) * x) + (n / Math.Pow(x, r - 1)));
 
             double x0 = number / root;
             double x1 = nextNumber(number, x0, root);

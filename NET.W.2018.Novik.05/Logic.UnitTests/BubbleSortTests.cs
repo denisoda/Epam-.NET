@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Logic;
 using NUnit.Framework;
 
@@ -216,7 +212,7 @@ namespace Logic.UnitTests
                 new int[][]
                 {
                     new int[] {1, 3, 5, 7, 9},
-                    new int[] {4, 2, 4, 6},
+                    new int[] {4, 2, 4, 6},     
                     new int[] {11, 22}
                 }
                 );
@@ -230,9 +226,9 @@ namespace Logic.UnitTests
                 }).Returns(
                 new int[][]
                 {
-                    new int[] { 2, 2, 3, 4, 5 },
+                    new int[] { 10 , 0 },
                     new int[] { 1, 1, 1 },
-                    new int[] { 10 , 0 }
+                    new int[] { 2, 2, 3, 4, 5 },
                 }
                 );
         }
@@ -248,9 +244,9 @@ namespace Logic.UnitTests
                 }).Returns(
                 new int[][]
                 {
-                    new int[] {1, 3, 5, 7, 9},
+                    new int[] {11, 22},
                     new int[] {4, 2, 4, 6},
-                    new int[] {11, 22}
+                    new int[] {1, 3, 5, 7, 9}
                 }
                 );
 
@@ -269,7 +265,6 @@ namespace Logic.UnitTests
                 }
                 );
         }
-
 
         public static IEnumerable<TestCaseData> GetJuggedArgumentNullException()
         {

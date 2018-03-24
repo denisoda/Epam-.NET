@@ -11,32 +11,12 @@ namespace Logic
     {
         #region Private fields
 
-        private double[] coefficients;
-        private int[] degrees;
+        private double[] _coefficients;
+        private int[] _degrees;
 
         #endregion
 
         #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Polynomial"/> class value by array of
-        /// <see cref="Monomial"/>.
-        /// </summary>
-        /// <param name="monomials">Array of <see cref="Monomial"/>.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when <paramref name="monomials"/> is null.
-        /// </exception>
-        public Polynomial(IEnumerable<Monomial> monomials)
-        {
-            if (monomials is null)
-            {
-                throw new ArgumentNullException($"{nameof(monomials)} must be not null", nameof(monomials));
-            }
-
-            this.coefficients = new double[monomials.Count()];
-            this.degrees = new int[monomials.Count()];
-            this.AddCoefficientDegree(monomials);
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Polynomial"/> class by array of coefficientes
@@ -70,8 +50,8 @@ namespace Logic
                 throw new ArgumentException($"{nameof(coefficients)} and {nameof(degrees)}'s must be the same");
             }
 
-            this.degrees = new int[degrees.Length];
-            this.coefficients = new double[coefficients.Length];
+            this._degrees = new int[degrees.Length];
+            this._coefficients = new double[coefficients.Length];
 
             for (int i = 0; i < degrees.Length; i++)
             {
@@ -85,55 +65,53 @@ namespace Logic
         #region Properties
 
         /// <summary>
-        /// Count of elemnts in Polynomial.
+        /// Count of elements in Polynomial.
         /// </summary>
-        public int GetsCount => this.coefficients.Length;
+        public int Count => this._coefficients.Length;
 
         /// <summary>
         /// The greatest degree.
         /// </summary>
-        public int GetsDegree
+        public int Degree
         {
             get
             {
-                if (this.GetsCount == 0)
+                if (this.Count == 0)
                 {
                     return -1;
                 }
 
                 int max = 0;
 
-                for (int i = 1; i < this.degrees.Length; i++)
+                for (int i = 1; i < this._degrees.Length; i++)
                 {
-                    if (this.degrees[max] < this.degrees[i])
+                    if (this._degrees[max] < this._degrees[i])
                     {
                         max = i;
                     }
                 }
 
-                return this.degrees[max];
+                return this._degrees[max];
             }
         }
 
-        #endregion
-
-        #region Indexers
-
-        /// <summary>
-        /// Returns <see cref="Monomial"/>
-        /// </summary>
-        /// <param name="index">Index monomial.</param>
-        /// <returns>Monomial.</returns>
-        public Monomial this[int index]
+        public double[] Coefficients
         {
             get
             {
-                if (index < 0 || index > this.GetsCount - 1)
-                {
-                    throw new ArgumentOutOfRangeException($"{nameof(index)} out of range", nameof(index));
-                }
+                var result = new double[this._coefficients.Length];
+                Array.Copy(this._coefficients, result, this._coefficients.Length);
+                return result;
+            }
+        }
 
-                return new Monomial() { Coefficient = this.coefficients[index], Degree = this.degrees[index] };
+        public int[] Degrees
+        {
+            get
+            {
+                var result = new int[this._degrees.Length];
+                Array.Copy(this._degrees, result, this._degrees.Length);
+                return result;
             }
         }
 
@@ -142,7 +120,8 @@ namespace Logic
         #region Public methods
 
         /// <summary>
-        /// Cast a polynomial to standart view.
+        /// Cast a polynomial to standart view. Sorting in descending order of degrees.
+        /// Addition elements with the same degrees.
         /// </summary>
         /// <param name="value">The polynomial.</param>
         /// <returns>The polynomial by standart view.</returns>
@@ -153,26 +132,22 @@ namespace Logic
                 throw new ArgumentNullException(nameof(value));
             }
 
-            int[] arrDegrees = new int[value.degrees.Length];
-            double[] arrCoefficients = new double[value.coefficients.Length];
-
-            Array.Copy(value.degrees, arrDegrees, arrDegrees.Length);
-            Array.Copy(value.coefficients, arrCoefficients, arrCoefficients.Length);
+            int[] arrDegrees = value.Degrees;
+            double[] arrCoefficients = value.Coefficients;
 
             double coefficient = 0;
             int degree = 0;
-
-            List<Monomial> result = new List<Monomial>();
+            int count = 0;
 
             for (int i = 0; i < arrDegrees.Length; i++)
             {
-                coefficient = arrCoefficients[i];
-                degree = arrDegrees[i];
-
-                if (coefficient == 0)
+                if (arrCoefficients[i] == 0)
                 {
                     continue;
                 }
+
+                coefficient = arrCoefficients[i];
+                degree = arrDegrees[i];
 
                 for (int j = i + 1; j < arrDegrees.Length; j++)
                 {
@@ -185,11 +160,18 @@ namespace Logic
 
                 if (coefficient != 0)
                 {
-                    result.Add(new Monomial(coefficient, degree));
+                    count++;
+                    arrCoefficients[i] = coefficient;
                 }
             }
 
-            return new Polynomial(result);
+            int[] resultDegrees;
+            double[] resultCoefficients;
+
+            GetNonZeroValues(arrDegrees, out resultDegrees, arrCoefficients, out resultCoefficients, count);
+            SortPolynomialByDegreesDesc(ref resultCoefficients, ref resultDegrees);
+
+            return new Polynomial(resultCoefficients, resultDegrees);
         }
 
         /// <summary>
@@ -203,9 +185,9 @@ namespace Logic
         {
             string result = string.Empty;
             string letter = "x";
-            for (int i = 0; i < this.GetsCount; i++)
+            for (int i = 0; i < this.Count; i++)
             {
-                result += $"({this.coefficients[i]}{letter}^{this.degrees[i]}) + ";
+                result += $"({this._coefficients[i]}{letter}^{this._degrees[i]}) + ";
             }
 
             return result.Substring(0, result.Length - 3);
@@ -220,19 +202,19 @@ namespace Logic
 
             Polynomial lhs = (Polynomial)obj;
 
-            if (lhs.GetsCount != this.GetsCount)
+            if (lhs.Count != this.Count)
             {
                 return false;
             }
 
             bool isEquals = true;
-            for (int i = 0; i < lhs.GetsCount && isEquals; i++)
+            for (int i = 0; i < lhs.Count && isEquals; i++)
             {
                 isEquals = false;
-                for (int j = 0; j < this.GetsCount; j++)
+                for (int j = 0; j < this.Count; j++)
                 {
-                    if (this.coefficients[i] == lhs.coefficients[i] ||
-                        this.degrees[i] == lhs.degrees[i])
+                    if (this._coefficients[i] == lhs._coefficients[i] &&
+                        this._degrees[i] == lhs._degrees[i])
                     {
                         isEquals = true;
                     }
@@ -244,34 +226,66 @@ namespace Logic
 
         public override int GetHashCode()
         {
-            return this.ToString().GetHashCode();
+            double result = base.GetHashCode();
+            int magic = 8;
+
+            for (int i = 0; i < this._coefficients.Length; i++)
+            {
+                result += this._degrees[i] + this._coefficients[i];
+            }
+
+            return (int)result * magic;
         }
 
         object ICloneable.Clone()
         {
-            int[] arrDegrees = new int[this.degrees.Length];
-            double[] arrCoefficients = new double[this.coefficients.Length];
+            return new Polynomial(this.Coefficients, this.Degrees);
+        }
 
-            Array.Copy(this.degrees, arrDegrees, arrDegrees.Length);
-            Array.Copy(this.coefficients, arrCoefficients, arrCoefficients.Length);
+        #endregion
 
-            return new Polynomial(arrCoefficients, arrDegrees);
+        #region private static methods
+
+        private static void GetNonZeroValues(int[] sourceDegreesArray, out int[] destinationDegreesArray, double[] sourceCoefficientArray, out double[] destinationCoefficientArray, int count)
+        {
+            destinationCoefficientArray = new double[count];
+            destinationDegreesArray = new int[count];
+
+            int indexDestinationArray = 0;
+            for (int i = 0; i < sourceCoefficientArray.Length && indexDestinationArray < destinationCoefficientArray.Length; i++)
+            {
+                double coefficient = sourceCoefficientArray[i];
+                if (coefficient != 0)
+                {
+                    destinationCoefficientArray[indexDestinationArray] = coefficient;
+                    destinationDegreesArray[indexDestinationArray] = sourceDegreesArray[i];
+                    indexDestinationArray++;
+                }
+            }
+        }
+
+        private static void SortPolynomialByDegreesDesc(ref double[] coefficient, ref int[] degrees)
+        {
+            bool isSort = false;
+            for (int i = 0; i < coefficient.Length && !isSort; i++)
+            {
+                isSort = true;
+                for (int j = 0; j < coefficient.Length - i - 1; j++)
+                {
+                    if (degrees[j] < degrees[j + 1])
+                    {
+                        var temp = degrees[j];
+                        degrees[j] = degrees[j + 1];
+                        degrees[j + 1] = temp;
+                        isSort = false;
+                    }
+                }
+            }
         }
 
         #endregion
 
         #region private methods
-
-        private void AddCoefficientDegree(IEnumerable<Monomial> monomials)
-        {
-            int i = 0;
-            foreach (var item in monomials)
-            {
-                this.AddCoefficient(item.Coefficient, i);
-                this.AddDegree(item.Degree, i);
-                i++;
-            }
-        }
 
         private void AddCoefficient(double value, int index)
         {
@@ -280,12 +294,12 @@ namespace Logic
                 throw new ArgumentException("Coefficient must not equal 0");
             }
 
-            this.coefficients[index] = value;
+            this._coefficients[index] = value;
         }
 
         private void AddDegree(int value, int index)
         {
-            this.degrees[index] = value;
+            this._degrees[index] = value;
         }
 
         #endregion // private methods

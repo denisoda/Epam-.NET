@@ -20,7 +20,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortByMinRowElements(array, (a, b) => a > b);
+            InnerBubbleSortRows(array, GetMinRowsElements(array));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortByMinRowElements(array, (a, b) => a < b);
+            InnerBubbleSortRowsDesc(array, GetMinRowsElements(array));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortByMaxRowElements(array, (a, b) => a > b);
+            InnerBubbleSortRows(array, GetMaxRowsElements(array));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortByMaxRowElements(array, (a, b) => a < b);
+            InnerBubbleSortRowsDesc(array, GetMaxRowsElements(array));
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortBySumElements(array, (a, b) => a > b);
+            InnerBubbleSortRows(array, GetSumRowsElements(array));
         }
 
         /// <summary>
@@ -105,57 +105,98 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerSortBySumElements(array, (a, b) => a < b);
+            InnerBubbleSortRowsDesc(array, GetSumRowsElements(array));
         }
 
         #endregion // public methods
 
         #region private methods
 
-        private static void InnerBubbleSort(int[][] array, Func<int[][], int[]> getKeys, Func<int, int, bool> order)
+        private static void InnerBubbleSortRows(int[][] array, int[] keys)
         {
-            int[] sumRows = getKeys(array);
             bool isSort = false;
-
-            for (int i = 0; i < sumRows.Length && !isSort; i++)
+            for (int i = 0; i < keys.Length && !isSort; i++)
             {
                 isSort = true;
-                for (int j = 0; j < sumRows.Length - i - 1; j++)
+                for (int j = 0; j < keys.Length - i - 1; j++)
                 {
-                    if (order(sumRows[j], sumRows[j + 1]))
+                    if (keys[j] > keys[j + 1])
                     {
-                        int temp = sumRows[j];
-                        sumRows[j] = sumRows[j + 1];
-                        sumRows[j + 1] = temp;
+                        int temp = keys[j];
+                        keys[j] = keys[j + 1];
+                        keys[j + 1] = temp;
                         SwapRows(array, j, j + 1);
                         isSort = false;
                     }
                 }
             }
         }
-        #region Sort by min (max) elements of rows
 
-        private static void InnerSortByMinRowElements(int[][] array, Func<int, int, bool> func)
+        private static void InnerBubbleSortRowsDesc(int[][] array, int[] keys)
         {
-            InnerBubbleSort(array, GetMinRowsElements, func);
-        }
-
-        private static void InnerSortByMaxRowElements(int[][] array, Func<int, int, bool> func)
-        {
-            InnerBubbleSort(array, GetMaxRowsElements, func);
+            bool isSort = false;
+            for (int i = 0; i < keys.Length && !isSort; i++)
+            {
+                isSort = true;
+                for (int j = 0; j < keys.Length - i - 1; j++)
+                {
+                    if (keys[j] < keys[j + 1])
+                    {
+                        int temp = keys[j];
+                        keys[j] = keys[j + 1];
+                        keys[j + 1] = temp;
+                        SwapRows(array, j, j + 1);
+                        isSort = false;
+                    }
+                }
+            }
         }
 
         private static int[] GetMinRowsElements(int[][] array)
         {
-            return GetElements(array, (a, b) => a > b);
+            int[] result = new int[array.Length];
+
+            int find = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                find = 0;
+                for (int j = 1; j < array[i].Length; j++)
+                {
+                    if (array[i][find] > array[i][j])
+                    {
+                        find = j;
+                    }
+                }
+
+                result[i] = array[i].Length == 0 ? 0 : array[i][find];
+            }
+
+            return result;
         }
 
         private static int[] GetMaxRowsElements(int[][] array)
         {
-            return GetElements(array, (a, b) => a < b);
+            int[] result = new int[array.Length];
+
+            int find = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                find = 0;
+                for (int j = 1; j < array[i].Length; j++)
+                {
+                    if (array[i][find] < array[i][j])
+                    {
+                        find = j;
+                    }
+                }
+
+                result[i] = array[i].Length == 0 ? 0 : array[i][find];
+            }
+
+            return result;
         }
 
-        private static int[] GetElements(int[][] array, Func<int, int, bool> func)
+        private static int[] GetArrayMaxElementsRow(int[][] array, Func<int, int, bool> func)
         {
             int[] result = new int[array.GetLength(0)];
 
@@ -177,16 +218,7 @@ namespace Logic
             return result;
         }
 
-        #endregion
-
-        #region Sort by sum elements of rows
-
-        private static void InnerSortBySumElements(int[][] array, Func<int, int, bool> func)
-        {
-            InnerBubbleSort(array, SumRows, func);
-        }
-
-        private static int[] SumRows(int[][] array)
+        private static int[] GetSumRowsElements(int[][] array)
         {
             int[] result = new int[array.GetLength(0)];
 
@@ -204,8 +236,6 @@ namespace Logic
 
             return result;
         }
-
-        #endregion
 
         private static void SwapRows(int[][] array, int i, int j)
         {

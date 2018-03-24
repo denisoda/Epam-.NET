@@ -19,7 +19,7 @@ namespace Logic.UnitTests.PolynomialTests
             Polynomial polynomial2 = new Polynomial(coeficients2, degrees2);
 
             int[] expectedDegrees = new int[] { 3, 1, 0 };
-            double[] expectedCoefficients = new double[] { 4, 14, -10 };
+            double[] expectedCoefficients = new double[] { 4, 14, -20 };
             Polynomial expected = new Polynomial(expectedCoefficients, expectedDegrees);
 
             Assert.AreEqual(expected, polynomial1 + polynomial2);

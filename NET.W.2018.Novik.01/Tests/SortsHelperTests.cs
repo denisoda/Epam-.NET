@@ -11,9 +11,10 @@ namespace Tests
     [TestClass]
     public class SortsHelperTests
     {
+        #region merge sort tests
 
         [TestMethod]
-        public void MegreSort_InputArrayIntegerNumbers_SortedArrayReturned()
+        public void MegreSort_InputCorrectValues_SortedArrayReturned()
         {
             //Arrange
             int[] arrExpected = new int[] { 1, 2, 3, 4, 5, 6 };
@@ -21,14 +22,24 @@ namespace Tests
 
             //Act
             arrInput = SortsHelper.MergerSort(arrInput);
-            
 
             //Assert
             Assert.IsTrue(arrExpected.SequenceEqual(arrInput));
         }
 
         [TestMethod]
-        public void QuickSort_InputArrayIntegerNumbers_SortedArrayReturned()
+        public void MergeSort_Null_ArgumentNullException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(
+                () => SortsHelper.MergerSort(null));
+        }
+
+        #endregion
+
+        #region quick sort tests
+
+        [TestMethod]
+        public void QuickSort_InputCorrectValues_SortedArrayReturned()
         {
             //Arrange
             int[] arrayGoal = new int[] { 1, 2, 3, 4, 5, 6 };
@@ -40,5 +51,14 @@ namespace Tests
             //Assert
             Assert.IsTrue(arrayGoal.SequenceEqual(arrayInput));
         }
+
+        [TestMethod]
+        public void QuickSort_Null_ArgumentNullException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(
+                () => SortsHelper.QuickSort(null));
+        }
+
+        #endregion
     }
 }

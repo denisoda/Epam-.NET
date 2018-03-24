@@ -1,17 +1,7 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="SortsHelper.cs" company="Epam">
-//     Copyright (c) Epam. All rights reserved.
-// </copyright>
-// <author>Novik Ilya</author>
-//-----------------------------------------------------------------------
+﻿using System;
+
 namespace Sorts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Contains implementation algorithms:
     /// Merge sort
@@ -19,24 +9,49 @@ namespace Sorts
     /// </summary>
     public class SortsHelper
     {
-        #region Merge Sort
+        #region public methods
+
         /// <summary>
-        /// Implementation algorithm  Merge Sort (via inner method InnerMergeSort)
+        /// Sort array of integer by Merger sort.
         /// </summary>
-        /// <param name="array">Array type of int</param>
+        /// <param name="array">Array to sort.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="array"/> is null.
+        /// </exception>
         /// <returns>Sorted array</returns>
         public static int[] MergerSort(int[] array)
         {
-            return InnerMergeSort(array, 0, array.Length - 1); // invoke inner mergersort
+            if (array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            return InnerMergeSort(array, 0, array.Length - 1);
         }
 
         /// <summary>
-        /// Inner impelementation algorithm of Merge Sort. Used for recurcive calls.
+        /// Sort array of integer by Quick sort.
         /// </summary>
-        /// <param name="array">Input array of integer numbers</param>
-        /// <param name="start">Begin point of array</param>
-        /// <param name="end">End point of array</param>
+        /// <param name="array">Array to sort.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="array"/> is null.
+        /// </exception>
         /// <returns>Sorted array</returns>
+        public static void QuickSort(int[] array)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            InnerQuickSort(array, 0, array.Length - 1);
+        }
+
+        #endregion
+
+        #region private methods
+
+
         private static int[] InnerMergeSort(int[] array, int start, int end)
         {
             if (start >= end)
@@ -55,18 +70,12 @@ namespace Sorts
 
             for (int i = 0; i < result.Length; i++)
             {
-                /*
-                 * if left array is empty , then add elemnt from right array
-                 */
-                if (indexLeft >= left.Length)  
+                if (indexLeft >= left.Length)
                 {
                     result[i] = right[indexRight++];
                     continue;
                 }
 
-                /*
-                 * if right array is empty , then add elemnt from left array 
-                 */
                 if (indexRight >= right.Length)
                 {
                     result[i] = left[indexLeft++];
@@ -86,24 +95,6 @@ namespace Sorts
             return result;
         }
 
-        #endregion
-
-        #region Quick Sort
-        /// <summary>
-        /// Implementation algorithm Quick Sort (via inner method InnerQuickSort)
-        /// </summary>
-        /// <param name="array">Array type of int</param>
-        public static void QuickSort(int[] array)
-        {
-            InnerQuickSort(array, 0, array.Length - 1); // invoke inner quicksort
-        }
-
-        /// <summary>
-        /// Inner impelementation algorithm of Quick Sort. Used for recurcive calls.
-        /// </summary>
-        /// <param name="array">Input array of integer numbers</param>
-        /// <param name="start">Begin point of array</param>
-        /// <param name="end">End point of array</param>
         private static void InnerQuickSort(int[] array, int start, int end)
         {
             int i = start, j = end;
@@ -112,13 +103,11 @@ namespace Sorts
 
             while (i <= j)
             {
-                // find element less than half
                 while (array[i] < middleElement)
                 {
                     i++;
                 }
 
-                // find element bigger than half
                 while (array[j] > middleElement)
                 {
                     j--;
@@ -135,22 +124,17 @@ namespace Sorts
                 }
             }
 
-            /*
-             * if left part of array has not order , then do sort again
-             */
             if (start < j)
             {
                 InnerQuickSort(array, start, j);
             }
-
-            /*
-             * if right part of array has not order , then do sort again
-             */           
+            
             if (i < end)
             {
                 InnerQuickSort(array, i, end);
             }
         }
+
         #endregion
     }
 }

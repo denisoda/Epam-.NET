@@ -1,13 +1,8 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Task4.cs" company="Epam training">
-//     Copyright (c) Epam training. All rights reserved.
-// </copyright>
-// <author>Novik Ilya</author>
-//-----------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+
 namespace Tasks
 {
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation task 4 (FilterDigit)
@@ -17,17 +12,17 @@ namespace Tasks
         #region public methods
 
         /// <summary>
-        /// Find numbers which has <paramref name="digit"/>
+        /// Find numbers which has <paramref name="digit"/>.
         /// </summary>
-        /// <param name="sequence">Input sequence</param>
-        /// <param name="digit">Digit</param>
+        /// <param name="sequence">The source sequence.</param>
+        /// <param name="digit">The digit</param>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="digit"/> is not a positive digit
+        /// <paramref name="digit"/> is not a positive digit.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when <paramref name="sequence"/> is null
+        /// <paramref name="sequence"/> is null.
         /// </exception>
-        /// <returns>Sequence has numbers which contains <paramref name="digit"/></returns>
+        /// <returns>The sequence of numbers which contains <paramref name="digit"/></returns>
         public static List<int> FilterDigits(IEnumerable<int> sequence, int digit)
         {
             if (sequence == null)

@@ -23,9 +23,9 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <returns>The greatest common divisor number.</returns>
-        public int Euclidean(int number1, int number2)
+        public static int Euclidean(int number1, int number2)
         {
-            int result = this.EuclideanNative(number1, number2);
+            int result = EuclideanNative(number1, number2);
             return result;
         }
 
@@ -35,20 +35,23 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <param name="numbers">The numbers to compute.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="numbers"/> is null.
+        /// </exception>
         /// <returns>The greatest common divisor number.</returns>
-        public int Euclidean(int number1, int number2, params int[] numbers)
+        public static int Euclidean(int number1, int number2, params int[] numbers)
         {
             if (numbers == null)
             {
                 throw new ArgumentNullException(nameof(numbers), $"{nameof(numbers)} must be not null");
             }
 
-            int result = this.EuclideanNative(number1, number2);
+            int result = EuclideanNative(number1, number2);
 
             int i = 0;
             while (result != 1 && i < numbers.Length)
             {
-                result = this.EuclideanNative(result, numbers[i]);
+                result = EuclideanNative(result, numbers[i]);
                 i++;
             }
 
@@ -62,10 +65,19 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <param name="numbers">The numbers to compute.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="numbers"/> is null.
+        /// </exception>
         /// <returns>The greatest common divisor number.</returns>
-        public int Euclidean(out TimeSpan time, int number1, int number2, params int[] numbers)
+        public static int Euclidean(out TimeSpan time, int number1, int number2, params int[] numbers)
         {
-            return this.GetLeadTime(out time, () => this.Euclidean(number1, number2, numbers));
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int result = Euclidean(number1, number2, numbers);
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+
+            return result;
         }
 
         /// <summary>
@@ -75,9 +87,15 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <returns>The greatest common divisor number.</returns>
-        public int Euclidean(out TimeSpan time, int number1, int number2)
+        public static int Euclidean(out TimeSpan time, int number1, int number2)
         {
-            return this.GetLeadTime(out time, () => this.Euclidean(number1, number2));
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int result = Euclidean(number1, number2);
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+
+            return result;
         }
 
         /// <summary>
@@ -86,9 +104,9 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <returns>The greatest common divisor number.</returns>
-        public int Stein(int number1, int number2)
+        public static int Stein(int number1, int number2)
         {
-            int result = this.SteinNative(number1, number2);
+            int result = SteinNative(number1, number2);
             return result;
         }
 
@@ -98,19 +116,22 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <param name="numbers">The numbers to compute.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="numbers"/> is null.
+        /// </exception>
         /// <returns>The greatest common divisor number.</returns>
-        public int Stein(int number1, int number2, params int[] numbers)
+        public static int Stein(int number1, int number2, params int[] numbers)
         {
             if (numbers == null)
             {
                 throw new ArgumentNullException(nameof(numbers), $"{nameof(numbers)} must be not null");
             }
 
-            int result = this.SteinNative(number1, number2);
+            int result = SteinNative(number1, number2);
 
             for (int i = 0; i < numbers.Length && result != 1; i++)
             {
-                result = this.SteinNative(result, numbers[i]);
+                result = SteinNative(result, numbers[i]);
             }
 
             return result;
@@ -123,10 +144,19 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <param name="numbers">The numbers to compute.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="numbers"/> is null.
+        /// </exception>
         /// <returns>The greatest common divisor number.</returns>
-        public int Stein(out TimeSpan time, int number1, int number2, params int[] numbers)
+        public static int Stein(out TimeSpan time, int number1, int number2, params int[] numbers)
         {
-            return this.GetLeadTime(out time, () => this.Stein(number1, number2, numbers));
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int result = Stein(number1, number2, numbers);
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+
+            return result;
         }
 
         /// <summary>
@@ -136,16 +166,22 @@ namespace Tasks
         /// <param name="number1">The first number to compute.</param>
         /// <param name="number2">The second number to compute.</param>
         /// <returns>The greatest common divisor number.</returns>
-        public int Stein(out TimeSpan time, int number1, int number2)
+        public static int Stein(out TimeSpan time, int number1, int number2)
         {
-            return this.GetLeadTime(out time, () => this.Stein(number1, number2));
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int result = Stein(number1, number2);
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+
+            return result;
         }
 
         #endregion // public methods
 
         #region private methods
 
-        private int EuclideanNative(int number1, int number2)
+        private static int EuclideanNative(int number1, int number2)
         {
             number1 = Math.Abs(number1);
             number2 = Math.Abs(number2);
@@ -175,7 +211,7 @@ namespace Tasks
             return number1;
         }
 
-        private int SteinNative(int number1, int number2)
+        private static int SteinNative(int number1, int number2)
         {
             number1 = Math.Abs(number1);
             number2 = Math.Abs(number2);
@@ -199,25 +235,25 @@ namespace Tasks
             {
                 if ((number2 & 1) != 0)
                 {
-                    return this.SteinNative(number1 >> 1, number2);
+                    return SteinNative(number1 >> 1, number2);
                 }
                 else
                 {
-                    return this.SteinNative(number1 >> 1, number2 >> 1) << 1;
+                    return SteinNative(number1 >> 1, number2 >> 1) << 1;
                 }
             }
 
             if ((~number2 & 1) != 0)
             {
-                return this.SteinNative(number1, number2 >> 1);
+                return SteinNative(number1, number2 >> 1);
             }
 
             if (number1 > number2)
             {
-                return this.SteinNative((number1 - number2) >> 1, number2);
+                return SteinNative((number1 - number2) >> 1, number2);
             }
 
-            return this.SteinNative((number2 - number1) >> 1, number1);
+            return SteinNative((number2 - number1) >> 1, number1);
         }
 
         private int GetLeadTime(out TimeSpan time, Func<int> alghoritm)

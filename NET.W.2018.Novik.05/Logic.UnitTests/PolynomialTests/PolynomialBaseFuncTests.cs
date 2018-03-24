@@ -13,11 +13,11 @@ namespace Logic.UnitTests.PolynomialTests
         [Test]
         public void PolynomialTest_CreateByNull_ArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new Polynomial(null));
+            Assert.Throws<ArgumentNullException>(() => new Polynomial(null,new int[] { }));
         }
 
         [Test]
-        public void PolynolialTest_CreateByZeroCoeficient_ArgumentException()
+        public void PolynolialTest_CreateByZeroCoefficient_ArgumentException()
         {
             int[] degrees = new int[] { 1, 2 };
             double[] coeficients = new double[] { 0, 1 };
@@ -33,18 +33,6 @@ namespace Logic.UnitTests.PolynomialTests
 
             Assert.Throws<ArgumentException>(
                 () => new Polynomial(coeficients, degrees));
-        }
-
-        [Test]
-        public void PolynomialTest_CreateByMonomials()
-        {
-            List<Monomial> values = new List<Monomial>();
-            values.Add(new Monomial(2, 3));
-            values.Add(new Monomial(7, 1));
-            values.Add(new Monomial(-5, 0));
-            values.Add(new Monomial(-5, 0));
-
-            Assert.Pass();
         }
 
         [Test]
@@ -66,12 +54,9 @@ namespace Logic.UnitTests.PolynomialTests
         [Test]
         public void PolynomialTest_ToString()
         {
-            List<Monomial> values = new List<Monomial>();
-            values.Add(new Monomial(2, 3));
-            values.Add(new Monomial(7, 1));
-            values.Add(new Monomial(-5, 0));
-            values.Add(new Monomial(-5, 0));
-            Polynomial polynomial = new Polynomial(values);
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial = new Polynomial(coeficients, degrees);
 
             string expected = "(2x^3) + (7x^1) + (-5x^0) + (-5x^0)";
 
@@ -85,12 +70,9 @@ namespace Logic.UnitTests.PolynomialTests
             double[] coeficients = new double[] { 2, 7, -5, -5 };
             Polynomial polynomial1 = new Polynomial(coeficients, degrees);
 
-            List<Monomial> values = new List<Monomial>();
-            values.Add(new Monomial(2, 3));
-            values.Add(new Monomial(7, 1));
-            values.Add(new Monomial(-5, 0));
-            values.Add(new Monomial(-5, 0));
-            Polynomial polynomial2 = new Polynomial(values);
+            int[] degrees2 = new int[] { 3, 1, 0, 0 };
+            double[] coeficients2 = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial2 = new Polynomial(coeficients, degrees);
 
             Assert.IsTrue(polynomial1.Equals(polynomial2));
         }
@@ -102,12 +84,9 @@ namespace Logic.UnitTests.PolynomialTests
             double[] coeficients = new double[] { 2, 7, -5, -5 };
             Polynomial polynomial1 = new Polynomial(coeficients, degrees);
 
-            List<Monomial> values = new List<Monomial>();
-            values.Add(new Monomial(2, 3));
-            values.Add(new Monomial(7, 1));
-            values.Add(new Monomial(-5, 0));
-            values.Add(new Monomial(-5, 0));
-            Polynomial polynomial2 = new Polynomial(values);
+            int[] degrees2 = new int[] { 3, 1, 0, 0 };
+            double[] coeficients2 = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial2 = new Polynomial(coeficients, degrees);
 
             Assert.AreEqual(polynomial1.GetHashCode(), polynomial2.GetHashCode());
         }
@@ -117,16 +96,13 @@ namespace Logic.UnitTests.PolynomialTests
         [Test]
         public void PolynomialTest_GetDegreeOfPolynomial()
         {
-            List<Monomial> values = new List<Monomial>();
-            values.Add(new Monomial(2, 3));
-            values.Add(new Monomial(7, 1));
-            values.Add(new Monomial(-5, 0));
-            values.Add(new Monomial(-5, 0));
-            Polynomial polynomial = new Polynomial(values);
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial = new Polynomial(coeficients, degrees);
 
             int expected = 3;
 
-            Assert.AreEqual(expected, polynomial.GetsDegree);
+            Assert.AreEqual(expected, polynomial.Degree);
         }
 
         [Test]

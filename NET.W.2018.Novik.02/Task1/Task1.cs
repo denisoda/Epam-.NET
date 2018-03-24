@@ -1,13 +1,7 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Task1.cs" company="Epam training">
-//     Copyright (c) Epam training. All rights reserved.
-// </copyright>
-// <author>Novik Ilya</author>
-//-----------------------------------------------------------------------
+﻿using System;
+
 namespace Tasks
 {
-    using System;
-
     /// <summary>
     /// Implementation task 1
     /// </summary>
@@ -16,9 +10,10 @@ namespace Tasks
         #region public methods
 
         /// <summary>
-        /// Inserting one number into another so that the second number occupies the position from bit <paramref name="start"/> to bit <paramref name="end"/> (bits are numbered from right to left)
+        /// Inserting one number into another so that the second number occupies
+        /// the position from bit <paramref name="start"/> to bit <paramref name="end"/> (bits are numbered from right to left).
         /// </summary>
-        /// <param name="number1">source number</param>
+        /// <param name="number1">The source number.</param>
         /// <param name="number2">number to insert</param>
         /// <param name="start">left border</param>
         /// <param name="end">right border</param>
@@ -27,7 +22,7 @@ namespace Tasks
         /// (<paramref name="start"/> &lt; 0) || (<paramref name="start"/> &gt; 31)
         /// || (<paramref name="end"/> &lt; 0) || (<paramref name="end"/> &gt; 31).
         /// </exception>
-        /// <returns>number is <paramref name="number1"/> source contains bits of <paramref name="number2"/></returns>
+        /// <returns>An integer.</returns>
         public static int InsertNumber(int number1, int number2, int start, int end)
         {
             if (end < start)

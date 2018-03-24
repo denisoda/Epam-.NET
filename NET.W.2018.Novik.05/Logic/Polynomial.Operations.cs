@@ -72,25 +72,25 @@ namespace Logic
                 throw new ArgumentNullException(nameof(rhs));
             }
 
-            List<Monomial> monomials = new List<Monomial>();
+            int[] degreesResult = new int[lhs.Count + rhs.Count];
+            double[] coefficientResult = new double[lhs.Count + rhs.Count];
 
-            for (int i = 0; i < lhs.GetsCount; i++)
+            int indexResultArray = 0;
+            for (int j = 0; j < lhs.Count; j++)
             {
-                Monomial monomial = new Monomial();
-                monomial.Coefficient = lhs.coefficients[i];
-                monomial.Degree = lhs.degrees[i];
-                monomials.Add(monomial);
+                degreesResult[indexResultArray] = lhs._degrees[j];
+                coefficientResult[indexResultArray] = lhs._coefficients[j];
+                indexResultArray++;
             }
 
-            for (int i = 0; i < rhs.GetsCount; i++)
+            for (int j = 0; j < rhs.Count; j++)
             {
-                Monomial monomial = new Monomial();
-                monomial.Coefficient = rhs.coefficients[i];
-                monomial.Degree = rhs.degrees[i];
-                monomials.Add(monomial);
+                degreesResult[indexResultArray] = lhs._degrees[j];
+                coefficientResult[indexResultArray] = lhs._coefficients[j];
+                indexResultArray++;
             }
 
-            return Polynomial.ToStandart(new Polynomial(monomials));
+            return Polynomial.ToStandart(new Polynomial(coefficientResult, degreesResult));
         }
 
         private static Polynomial Multiplication(Polynomial lhs, Polynomial rhs)
@@ -105,20 +105,21 @@ namespace Logic
                 throw new ArgumentNullException(nameof(rhs));
             }
 
-            List<Monomial> result = new List<Monomial>();
+            int[] resultDegrees = new int[lhs.Count * rhs.Count];
+            double[] resultCoefficients = new double[lhs.Count * rhs.Count];
+            int indexResultArray = 0;
 
-            for (int indexLhs = 0; indexLhs < lhs.GetsCount; indexLhs++)
+            for (int indexLhs = 0; indexLhs < lhs.Count; indexLhs++)
             {
-                for (int indexRhs = 0; indexRhs < rhs.GetsCount; indexRhs++)
+                for (int indexRhs = 0; indexRhs < rhs.Count; indexRhs++)
                 {
-                    Monomial monomial = new Monomial();
-                    monomial.Coefficient = lhs.coefficients[indexLhs] * rhs.coefficients[indexRhs];
-                    monomial.Degree = lhs.degrees[indexLhs] + rhs.degrees[indexRhs];
-                    result.Add(monomial);
+                    resultCoefficients[indexResultArray] = lhs._coefficients[indexLhs] * rhs._coefficients[indexRhs];
+                    resultDegrees[indexResultArray] = lhs._degrees[indexLhs] + rhs._degrees[indexRhs];
+                    indexResultArray++;
                 }
             }
 
-            return new Polynomial(result);
+            return new Polynomial(resultCoefficients, resultDegrees);
         }
 
         private static Polynomial Subtract(Polynomial lhs, Polynomial rhs)
@@ -133,25 +134,25 @@ namespace Logic
                 throw new ArgumentNullException(nameof(rhs));
             }
 
-            List<Monomial> monomials = new List<Monomial>();
+            int[] degreesResult = new int[lhs.Count + rhs.Count];
+            double[] coefficientResult = new double[lhs.Count + rhs.Count];
 
-            for (int i = 0; i < lhs.GetsCount; i++)
+            int indexResultArray = 0;
+            for (int j = 0; j < lhs.Count; j++)
             {
-                Monomial monomial = new Monomial();
-                monomial.Coefficient = lhs.coefficients[i];
-                monomial.Degree = lhs.degrees[i];
-                monomials.Add(monomial);
+                degreesResult[indexResultArray] = lhs._degrees[j];
+                coefficientResult[indexResultArray] = lhs._coefficients[j];
+                indexResultArray++;
             }
 
-            for (int i = 0; i < rhs.GetsCount; i++)
+            for (int j = 0; j < rhs.Count; j++)
             {
-                Monomial monomial = new Monomial();
-                monomial.Coefficient = rhs.coefficients[i] * (-1);
-                monomial.Degree = rhs.degrees[i];
-                monomials.Add(monomial);
+                degreesResult[indexResultArray] = lhs._degrees[j];
+                coefficientResult[indexResultArray] = lhs._coefficients[j] * (-1);
+                indexResultArray++;
             }
 
-            return Polynomial.ToStandart(new Polynomial(monomials));
+            return Polynomial.ToStandart(new Polynomial(coefficientResult, degreesResult));
         }
 
         #endregion

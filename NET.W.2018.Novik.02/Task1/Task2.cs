@@ -1,14 +1,8 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Task2.cs" company="Epam training">
-//     Copyright (c) Epam training. All rights reserved.
-// </copyright>
-// <author>Novik Ilya</author>
-//-----------------------------------------------------------------------
+﻿using System;
+using System.Linq;
+
 namespace Tasks
 {
-    using System;
-    using System.Linq;
-
     /// <summary>
     /// Implementation task 2 (FindNextBiggerNumber)
     /// </summary>
@@ -21,7 +15,7 @@ namespace Tasks
         /// </summary>
         /// <param name="number">Number.</param>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="number"/> is a negative number
+        /// Thrown when <paramref name="number"/> is a negative number.
         /// </exception>
         /// <returns>
         /// Number.
@@ -34,21 +28,10 @@ namespace Tasks
                 throw new ArgumentException($"{nameof(number)} must be positive number");
             }
 
-            // Numbers from 0 to 11 have not the required number
-            if (number < 11)
-            {
-                return -1;
-            }
+            int[] arrDigits = ConvertIntToArrayDigits(number);
 
-            int[] arrDigits = ConvertIntToArrayDigits(number); // Using inner method
-
-            if (IsOrderDescending(arrDigits))
-            {
-                return -1;
-            }
-
-            bool hasFound = false; // The required number has found
-            int size = 0; // Size of range
+            bool hasFound = false;
+            int size = 0;
             int indexStartPoint = arrDigits.Length - 1;
 
             while (!hasFound && size < arrDigits.Length - 1)
@@ -68,24 +51,23 @@ namespace Tasks
                 size++;
             }
 
-             // Sort part digits of number
-             if (size > 1)
-             {
-                    SortsHelper.QuickSort(arrDigits, --size, arrDigits.Length - 1); // Use quick sort
-             }
+            if (!hasFound)
+            {
+                return -1;
+            }
 
-             return Convert.ToInt32(string.Concat(arrDigits));
+            if (size > 1)
+            {
+                SortsHelper.QuickSort(arrDigits, --size, arrDigits.Length - 1); // Use quick sort
+            }
+
+            return Convert.ToInt32(string.Concat(arrDigits));
         }
 
         #endregion
 
         #region private methods
 
-        /// <summary>
-        /// Convert number to array digits
-        /// </summary>
-        /// <param name="number">Number.</param>
-        /// <returns>Array digits.</returns>
         private static int[] ConvertIntToArrayDigits(int number)
         {
             string numberStr = Convert.ToString(number);
@@ -98,26 +80,6 @@ namespace Tasks
             }
 
             return resultArray;
-        }
-
-        /// <summary>
-        /// Check array is order descending
-        /// </summary>
-        /// <param name="array">Array</param>
-        /// <returns>Bool</returns>
-        private static bool IsOrderDescending(int[] array)
-        {
-            bool result = true;
-            for (int i = 0; i < array.Length - 1; i++)
-            {
-                if (array[i] < array[i + 1])
-                {
-                    result = false;
-                    break;
-                }
-            }
-
-            return result;
         }
 
         #endregion
