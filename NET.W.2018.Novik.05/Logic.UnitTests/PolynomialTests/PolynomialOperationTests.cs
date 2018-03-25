@@ -102,5 +102,63 @@ namespace Logic.UnitTests.PolynomialTests
                     Polynomial result = polynomial1 * null;
                 });
         }
+
+        [Test]
+        public void PolynomialOperationTest_Equal()
+        {
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial1 = new Polynomial(coeficients, degrees);
+
+            int[] degrees2 = new int[] { 1, 3, 0, 0 };
+            double[] coeficients2 = new double[] { 7, 2, -5, -5 };
+            Polynomial polynomial2 = new Polynomial(coeficients2, degrees2);
+
+            Assert.IsTrue(polynomial1 == polynomial2);
+        }
+
+        [Test]
+        public void PolynomialOperationTest_Equal_ArgumentNullException()
+        {
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial1 = new Polynomial(coeficients, degrees);
+            Polynomial polynomial2 = null;
+
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                {
+                    bool result = polynomial1 == polynomial2;
+                });
+        }
+
+        [Test]
+        public void PolynomialOperationTest_NotEqual()
+        {
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial1 = new Polynomial(coeficients, degrees);
+
+            int[] degrees2 = new int[] { 1, 0, 0 };
+            double[] coeficients2 = new double[] { 7, -5, -5 };
+            Polynomial polynomial2 = new Polynomial(coeficients2, degrees2);
+
+            Assert.IsTrue(polynomial1 != polynomial2);
+        }
+
+        [Test]
+        public void PolynomialOperationTest_NotEqual_ArgumentNullException()
+        {
+            int[] degrees = new int[] { 3, 1, 0, 0 };
+            double[] coeficients = new double[] { 2, 7, -5, -5 };
+            Polynomial polynomial1 = new Polynomial(coeficients, degrees);
+
+            Polynomial polynomial2 = null;
+
+            Assert.Throws<ArgumentNullException>(
+                () => {
+                   bool result = polynomial1 != polynomial2;
+                });
+        }
     }
 }

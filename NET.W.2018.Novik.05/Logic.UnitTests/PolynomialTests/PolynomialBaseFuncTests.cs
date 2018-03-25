@@ -84,14 +84,14 @@ namespace Logic.UnitTests.PolynomialTests
             double[] coeficients = new double[] { 2, 7, -5, -5 };
             Polynomial polynomial1 = new Polynomial(coeficients, degrees);
 
-            int[] degrees2 = new int[] { 3, 1, 0, 0 };
-            double[] coeficients2 = new double[] { 2, 7, -5, -5 };
+            int[] degrees2 = new int[] { 1, 0, 0, 3 };
+            double[] coeficients2 = new double[] { 7, -5, -5, 2 };
             Polynomial polynomial2 = new Polynomial(coeficients, degrees);
 
             Assert.AreEqual(polynomial1.GetHashCode(), polynomial2.GetHashCode());
         }
 
-        #endregion // override Object's class methods
+        #endregion // test override Object's class methods
 
         [Test]
         public void PolynomialTest_GetDegreeOfPolynomial()
@@ -125,5 +125,6 @@ namespace Logic.UnitTests.PolynomialTests
             Assert.Throws<ArgumentNullException>(
                 () => Polynomial.ToStandart(null));
         }
+
     }
 }

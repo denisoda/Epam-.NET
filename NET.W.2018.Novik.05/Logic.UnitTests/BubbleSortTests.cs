@@ -8,6 +8,8 @@ namespace Logic.UnitTests
     [TestFixture]
     class BubbleSortTests
     {
+        #region tests
+
         [Test, TestCaseSource("GetJuggedSumRows")]
         public int[][] Test_BubbleSortBySumElemntsRows_CorrectValues(Func<int[][]> func)
         {
@@ -60,8 +62,12 @@ namespace Logic.UnitTests
         public void Test_BubbleSort_Null_ArgumentNullException(Func<int[][]> func)
         {
             int[][] array = func();
-            Assert.Throws<ArgumentNullException>(() =>BubbleSort.SortByMinRowElementDescending(array));
+            Assert.Throws<ArgumentNullException>(() => BubbleSort.SortByMinRowElementDescending(array));
         }
+
+        #endregion !tests
+
+        #region sources for tests
 
         private static TestCaseData CreateTestCaseData(Func<int[][]> getJugged)
         {
@@ -70,7 +76,7 @@ namespace Logic.UnitTests
 
         public static IEnumerable<TestCaseData> GetJuggedSumRows()
         {
-            yield return CreateTestCaseData(() => 
+            yield return CreateTestCaseData(() =>
                 new int[][]
                 {
                     new int[] {1, 3, 5, 7, 9},
@@ -114,7 +120,7 @@ namespace Logic.UnitTests
                 {
                     new int[] {11, 22},
                     new int[] {1, 3, 5, 7, 9},
-                    new int[] {0, 2, 4, 6}                   
+                    new int[] {0, 2, 4, 6}
                 }
                 );
 
@@ -212,7 +218,7 @@ namespace Logic.UnitTests
                 new int[][]
                 {
                     new int[] {1, 3, 5, 7, 9},
-                    new int[] {4, 2, 4, 6},     
+                    new int[] {4, 2, 4, 6},
                     new int[] {11, 22}
                 }
                 );
@@ -270,5 +276,7 @@ namespace Logic.UnitTests
         {
             yield return CreateTestCaseData(() => null);
         }
+
+        #endregion // sources for tests
     }
 }

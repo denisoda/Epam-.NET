@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Logic
 {
     public static class BubbleSort
     {
+        #region private fields
+
+        private static IComparer<int> defaultOrder = new DefaultOrder();
+        private static IComparer<int> descendingOrder = new DescendingOrder();
+
+        #endregion
+
         #region public methods
 
         /// <summary>
@@ -20,7 +28,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRows(array, GetMinRowsElements(array));
+            InnerBubbleSortRows(array, GetMinRowsElements(array), defaultOrder);
         }
 
         /// <summary>
@@ -37,7 +45,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRowsDesc(array, GetMinRowsElements(array));
+            InnerBubbleSortRows(array, GetMinRowsElements(array), descendingOrder);
         }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRows(array, GetMaxRowsElements(array));
+            InnerBubbleSortRows(array, GetMaxRowsElements(array), defaultOrder);
         }
 
         /// <summary>
@@ -71,7 +79,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRowsDesc(array, GetMaxRowsElements(array));
+            InnerBubbleSortRows(array, GetMaxRowsElements(array), descendingOrder);
         }
 
         /// <summary>
@@ -88,7 +96,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRows(array, GetSumRowsElements(array));
+            InnerBubbleSortRows(array, GetSumRowsElements(array), defaultOrder);
         }
 
         /// <summary>
@@ -105,14 +113,14 @@ namespace Logic
                 throw new ArgumentNullException(nameof(array));
             }
 
-            InnerBubbleSortRowsDesc(array, GetSumRowsElements(array));
+            InnerBubbleSortRows(array, GetSumRowsElements(array), descendingOrder);
         }
 
         #endregion // public methods
 
         #region private methods
 
-        private static void InnerBubbleSortRows(int[][] array, int[] keys)
+        private static void InnerBubbleSortRows(int[][] array, int[] keys, IComparer<int> comparer)
         {
             bool isSort = false;
             for (int i = 0; i < keys.Length && !isSort; i++)
@@ -120,27 +128,7 @@ namespace Logic
                 isSort = true;
                 for (int j = 0; j < keys.Length - i - 1; j++)
                 {
-                    if (keys[j] > keys[j + 1])
-                    {
-                        int temp = keys[j];
-                        keys[j] = keys[j + 1];
-                        keys[j + 1] = temp;
-                        SwapRows(array, j, j + 1);
-                        isSort = false;
-                    }
-                }
-            }
-        }
-
-        private static void InnerBubbleSortRowsDesc(int[][] array, int[] keys)
-        {
-            bool isSort = false;
-            for (int i = 0; i < keys.Length && !isSort; i++)
-            {
-                isSort = true;
-                for (int j = 0; j < keys.Length - i - 1; j++)
-                {
-                    if (keys[j] < keys[j + 1])
+                    if (comparer.Compare(keys[j], keys[j + 1]) == 1)
                     {
                         int temp = keys[j];
                         keys[j] = keys[j + 1];
@@ -191,28 +179,6 @@ namespace Logic
                 }
 
                 result[i] = array[i].Length == 0 ? 0 : array[i][find];
-            }
-
-            return result;
-        }
-
-        private static int[] GetArrayMaxElementsRow(int[][] array, Func<int, int, bool> func)
-        {
-            int[] result = new int[array.GetLength(0)];
-
-            int find = 0;
-            for (int i = 0; i < array.Length; i++)
-            {
-                find = 0;
-                for (int j = 0; j < array[i].Length; j++)
-                {
-                    if (func(find, array[i][j]))
-                    {
-                        find = array[i][j];
-                    }
-                }
-
-                result[i] = find;
             }
 
             return result;

@@ -13,6 +13,8 @@ namespace Logic
 
         private double[] _coefficients;
         private int[] _degrees;
+        private int maxDegree;
+        private int hashCode;
 
         #endregion
 
@@ -52,12 +54,16 @@ namespace Logic
 
             this._degrees = new int[degrees.Length];
             this._coefficients = new double[coefficients.Length];
+            this.maxDegree = -1;
 
             for (int i = 0; i < degrees.Length; i++)
             {
                 this.AddCoefficient(coefficients[i], i);
                 this.AddDegree(degrees[i], i);
+                this.maxDegree = Math.Max(this.maxDegree, degrees[i]);
             }
+
+            this.hashCode = this.ComputeHashCode();
         }
 
         #endregion
@@ -70,30 +76,9 @@ namespace Logic
         public int Count => this._coefficients.Length;
 
         /// <summary>
-        /// The greatest degree.
+        /// The greatest degree. If the polynomial is empty then return -1.
         /// </summary>
-        public int Degree
-        {
-            get
-            {
-                if (this.Count == 0)
-                {
-                    return -1;
-                }
-
-                int max = 0;
-
-                for (int i = 1; i < this._degrees.Length; i++)
-                {
-                    if (this._degrees[max] < this._degrees[i])
-                    {
-                        max = i;
-                    }
-                }
-
-                return this._degrees[max];
-            }
-        }
+        public int Degree => this.maxDegree;
 
         public double[] Coefficients
         {
@@ -213,8 +198,8 @@ namespace Logic
                 isEquals = false;
                 for (int j = 0; j < this.Count; j++)
                 {
-                    if (this._coefficients[i] == lhs._coefficients[i] &&
-                        this._degrees[i] == lhs._degrees[i])
+                    if (this._coefficients[i] == lhs._coefficients[j] &&
+                        this._degrees[i] == lhs._degrees[j])
                     {
                         isEquals = true;
                     }
@@ -224,18 +209,7 @@ namespace Logic
             return isEquals;
         }
 
-        public override int GetHashCode()
-        {
-            double result = base.GetHashCode();
-            int magic = 8;
-
-            for (int i = 0; i < this._coefficients.Length; i++)
-            {
-                result += this._degrees[i] + this._coefficients[i];
-            }
-
-            return (int)result * magic;
-        }
+        public override int GetHashCode() => this.hashCode;
 
         object ICloneable.Clone()
         {
@@ -291,7 +265,7 @@ namespace Logic
         {
             if (value == 0)
             {
-                throw new ArgumentException("Coefficient must not equal 0");
+                throw new ArgumentException("Coefficient must be not zero", nameof(value));
             }
 
             this._coefficients[index] = value;
@@ -299,7 +273,25 @@ namespace Logic
 
         private void AddDegree(int value, int index)
         {
+            if (value < 0)
+            {
+                throw new ArgumentException("degree must be greater than 0");
+            }
+
             this._degrees[index] = value;
+        }
+
+        private int ComputeHashCode()
+        {
+            int result = 0;
+            int magic = 1000;
+
+            for (int i = 0; i < this.Count - 1; i++)
+            {
+                result += this._degrees[i] ^ (int)this._coefficients[i];
+            }
+
+            return magic + result;
         }
 
         #endregion // private methods
