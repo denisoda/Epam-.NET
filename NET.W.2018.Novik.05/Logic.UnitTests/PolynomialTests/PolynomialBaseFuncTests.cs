@@ -102,7 +102,7 @@ namespace Logic.UnitTests.PolynomialTests
 
             int expected = 3;
 
-            Assert.AreEqual(expected, polynomial.Degree);
+            Assert.AreEqual(expected, polynomial.MaxDegree);
         }
 
         [Test]
@@ -124,6 +124,17 @@ namespace Logic.UnitTests.PolynomialTests
         {
             Assert.Throws<ArgumentNullException>(
                 () => Polynomial.ToStandart(null));
+        }
+
+        [Test]
+        public void PolynomialTest_EmptyArguments()
+        {
+            int[] degrees = new int[] {  };
+            double[] coeficients = new double[] {  };
+            Polynomial polynomial = new Polynomial(coeficients, degrees);
+            int expectedDegree = -1;
+
+            Assert.AreEqual(expectedDegree, polynomial.MaxDegree);
         }
 
     }

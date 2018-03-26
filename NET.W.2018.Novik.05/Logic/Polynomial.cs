@@ -13,7 +13,7 @@ namespace Logic
 
         private double[] _coefficients;
         private int[] _degrees;
-        private int maxDegree;
+        private int _maxDegree;
         private int hashCode;
 
         #endregion
@@ -27,13 +27,14 @@ namespace Logic
         /// <param name="coefficients">Array of coefficients.</param>
         /// <param name="degrees">Array of degrees.</param>
         /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="coefficients"/> and <paramref name="degrees"/>
+        /// <paramref name="coefficients"/> and <paramref name="degrees"/>
         /// lengths are not the same.
-        /// Thrown when <paramref name="coefficients"/> contains 0.
+        /// <paramref name="coefficients"/> contains 0.
+        /// <paramref name="degrees"/> contains numbers less than 0.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when <paramref name="coefficients"/> is null.
-        /// Thrown when <paramref name="degrees"/> is null.
+        /// <paramref name="coefficients"/> is null.
+        /// <paramref name="degrees"/> is null.
         /// </exception>
         public Polynomial(double[] coefficients, int[] degrees)
         {
@@ -54,13 +55,13 @@ namespace Logic
 
             this._degrees = new int[degrees.Length];
             this._coefficients = new double[coefficients.Length];
-            this.maxDegree = -1;
+            this._maxDegree = -1;
 
             for (int i = 0; i < degrees.Length; i++)
             {
                 this.AddCoefficient(coefficients[i], i);
                 this.AddDegree(degrees[i], i);
-                this.maxDegree = Math.Max(this.maxDegree, degrees[i]);
+                this._maxDegree = Math.Max(this._maxDegree, degrees[i]);
             }
 
             this.hashCode = this.ComputeHashCode();
@@ -78,15 +79,15 @@ namespace Logic
         /// <summary>
         /// The greatest degree. If the polynomial is empty then return -1.
         /// </summary>
-        public int Degree => this.maxDegree;
+        public int MaxDegree => this._maxDegree;
 
         public double[] Coefficients
         {
             get
             {
-                var result = new double[this._coefficients.Length];
-                Array.Copy(this._coefficients, result, this._coefficients.Length);
-                return result;
+                var coefficientsCopy = new double[this._coefficients.Length];
+                Array.Copy(this._coefficients, coefficientsCopy, this._coefficients.Length);
+                return coefficientsCopy;
             }
         }
 
@@ -94,9 +95,9 @@ namespace Logic
         {
             get
             {
-                var result = new int[this._degrees.Length];
-                Array.Copy(this._degrees, result, this._degrees.Length);
-                return result;
+                var degreesCopy = new int[this._degrees.Length];
+                Array.Copy(this._degrees, degreesCopy, this._degrees.Length);
+                return degreesCopy;
             }
         }
 
@@ -117,44 +118,14 @@ namespace Logic
                 throw new ArgumentNullException(nameof(value));
             }
 
-            int[] arrDegrees = value.Degrees;
-            double[] arrCoefficients = value.Coefficients;
-
-            double coefficient = 0;
-            int degree = 0;
-            int count = 0;
-
-            for (int i = 0; i < arrDegrees.Length; i++)
-            {
-                if (arrCoefficients[i] == 0)
-                {
-                    continue;
-                }
-
-                coefficient = arrCoefficients[i];
-                degree = arrDegrees[i];
-
-                for (int j = i + 1; j < arrDegrees.Length; j++)
-                {
-                    if (degree == arrDegrees[j])
-                    {
-                        coefficient += arrCoefficients[j];
-                        arrCoefficients[j] = 0;
-                    }
-                }
-
-                if (coefficient != 0)
-                {
-                    count++;
-                    arrCoefficients[i] = coefficient;
-                }
-            }
+            int[] sourceDegrees = value.Degrees;
+            double[] sourceCoefficients = value.Coefficients;
 
             int[] resultDegrees;
             double[] resultCoefficients;
 
-            GetNonZeroValues(arrDegrees, out resultDegrees, arrCoefficients, out resultCoefficients, count);
-            SortPolynomialByDegreesDesc(ref resultCoefficients, ref resultDegrees);
+            AddElementsTheSameDegree(sourceCoefficients, sourceDegrees, out resultCoefficients, out resultDegrees);
+            SortPolynomialByDegreeDesc(resultCoefficients, resultDegrees);
 
             return new Polynomial(resultCoefficients, resultDegrees);
         }
@@ -187,7 +158,7 @@ namespace Logic
 
             Polynomial lhs = (Polynomial)obj;
 
-            if (lhs.Count != this.Count)
+            if (this.Count != lhs.Count)
             {
                 return false;
             }
@@ -220,25 +191,62 @@ namespace Logic
 
         #region private static methods
 
-        private static void GetNonZeroValues(int[] sourceDegreesArray, out int[] destinationDegreesArray, double[] sourceCoefficientArray, out double[] destinationCoefficientArray, int count)
+        private static void AddElementsTheSameDegree(double[] sourceCoefficients, int[] sourceDegrees, out double[] destinationCoefficients, out int[] destinationDegrees)
         {
-            destinationCoefficientArray = new double[count];
-            destinationDegreesArray = new int[count];
+            const int wasteCoefficient = 0;
+            double coefficientToAdd = 0;
+            int degreeToCompare = 0;
+            int countNotZeroElements = 0;
 
-            int indexDestinationArray = 0;
-            for (int i = 0; i < sourceCoefficientArray.Length && indexDestinationArray < destinationCoefficientArray.Length; i++)
+            for (int i = 0; i < sourceDegrees.Length; i++)
             {
-                double coefficient = sourceCoefficientArray[i];
-                if (coefficient != 0)
+                if (sourceCoefficients[i] == wasteCoefficient)
                 {
-                    destinationCoefficientArray[indexDestinationArray] = coefficient;
-                    destinationDegreesArray[indexDestinationArray] = sourceDegreesArray[i];
-                    indexDestinationArray++;
+                    continue;
+                }
+
+                coefficientToAdd = sourceCoefficients[i];
+                degreeToCompare = sourceDegrees[i];
+
+                for (int j = i + 1; j < sourceDegrees.Length; j++)
+                {
+                    if (degreeToCompare == sourceDegrees[j])
+                    {
+                        coefficientToAdd += sourceCoefficients[j];
+                        sourceCoefficients[j] = wasteCoefficient;
+                    }
+                }
+
+                if (coefficientToAdd != wasteCoefficient)
+                {
+                    countNotZeroElements++;
+                    sourceCoefficients[i] = coefficientToAdd;
+                }
+            }
+
+            RemoveZeroValues(sourceCoefficients, sourceDegrees, out destinationCoefficients, out destinationDegrees, countNotZeroElements);
+        }
+
+        private static void RemoveZeroValues(double[] sourceCoefficient, int[] sourceDegrees, out double[] destinationCoefficient, out int[] destinationDegrees, int count)
+        {
+            destinationCoefficient = new double[count];
+            destinationDegrees = new int[count];
+
+            int indexDestination = 0;
+            const int valueToRemove = 0;
+            for (int i = 0; i < sourceCoefficient.Length && indexDestination < destinationCoefficient.Length; i++)
+            {
+                double coefficient = sourceCoefficient[i];
+                if (coefficient != valueToRemove)
+                {
+                    destinationCoefficient[indexDestination] = coefficient;
+                    destinationDegrees[indexDestination] = sourceDegrees[i];
+                    indexDestination++;
                 }
             }
         }
 
-        private static void SortPolynomialByDegreesDesc(ref double[] coefficient, ref int[] degrees)
+        private static void SortPolynomialByDegreeDesc(double[] coefficient, int[] degrees)
         {
             bool isSort = false;
             for (int i = 0; i < coefficient.Length && !isSort; i++)

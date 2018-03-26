@@ -10,17 +10,7 @@ namespace Logic
     {
         int IComparer<int>.Compare(int x, int y)
         {
-            if (x > y)
-            {
-                return 1;
-            }
-
-            if (x < y)
-            {
-                return -1;
-            }
-
-            return 0;
+            return x.CompareTo(y);
         }
     }
 }
