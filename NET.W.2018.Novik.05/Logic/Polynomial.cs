@@ -85,9 +85,9 @@ namespace Logic
         {
             get
             {
-                var coefficientsCopy = new double[this._coefficients.Length];
-                Array.Copy(this._coefficients, coefficientsCopy, this._coefficients.Length);
-                return coefficientsCopy;
+                var copyCoefficients = new double[this._coefficients.Length];
+                Array.Copy(this._coefficients, copyCoefficients, this._coefficients.Length);
+                return copyCoefficients;
             }
         }
 
@@ -95,11 +95,13 @@ namespace Logic
         {
             get
             {
-                var degreesCopy = new int[this._degrees.Length];
-                Array.Copy(this._degrees, degreesCopy, this._degrees.Length);
-                return degreesCopy;
+                var copyDegrees = new int[this._degrees.Length];
+                Array.Copy(this._degrees, copyDegrees, this._degrees.Length);
+                return copyDegrees;
             }
         }
+
+        public bool IsEmpty => this.Count <= 0;
 
         #endregion
 
@@ -110,6 +112,10 @@ namespace Logic
         /// Addition elements with the same degrees.
         /// </summary>
         /// <param name="value">The polynomial.</param>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="value"/> is null.
+        /// <paramref name="value"/> is empty.
+        /// </exception>
         /// <returns>The polynomial by standart view.</returns>
         public static Polynomial ToStandart(Polynomial value)
         {
@@ -118,9 +124,13 @@ namespace Logic
                 throw new ArgumentNullException(nameof(value));
             }
 
+            if (value.IsEmpty)
+            {
+                throw new ArithmeticException($"{nameof(value)} must be not empty");
+            }
+
             int[] sourceDegrees = value.Degrees;
             double[] sourceCoefficients = value.Coefficients;
-
             int[] resultDegrees;
             double[] resultCoefficients;
 
@@ -141,6 +151,7 @@ namespace Logic
         {
             string result = string.Empty;
             string letter = "x";
+
             for (int i = 0; i < this.Count; i++)
             {
                 result += $"({this._coefficients[i]}{letter}^{this._degrees[i]}) + ";
@@ -164,6 +175,7 @@ namespace Logic
             }
 
             bool isEquals = true;
+
             for (int i = 0; i < lhs.Count && isEquals; i++)
             {
                 isEquals = false;
@@ -231,9 +243,9 @@ namespace Logic
         {
             destinationCoefficient = new double[count];
             destinationDegrees = new int[count];
-
             int indexDestination = 0;
             const int valueToRemove = 0;
+
             for (int i = 0; i < sourceCoefficient.Length && indexDestination < destinationCoefficient.Length; i++)
             {
                 double coefficient = sourceCoefficient[i];
@@ -249,6 +261,7 @@ namespace Logic
         private static void SortPolynomialByDegreeDesc(double[] coefficient, int[] degrees)
         {
             bool isSort = false;
+
             for (int i = 0; i < coefficient.Length && !isSort; i++)
             {
                 isSort = true;
@@ -291,15 +304,15 @@ namespace Logic
 
         private int ComputeHashCode()
         {
-            int result = 0;
+            int hashcode = 0;
             int magic = 1000;
 
             for (int i = 0; i < this.Count - 1; i++)
             {
-                result += this._degrees[i] ^ (int)this._coefficients[i];
+                hashcode += this._degrees[i] ^ (int)this._coefficients[i];
             }
 
-            return magic + result;
+            return magic + hashcode;
         }
 
         #endregion // private methods

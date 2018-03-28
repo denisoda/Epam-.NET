@@ -16,7 +16,7 @@ namespace Logic
         /// <paramref name="lhs"/> is null.
         /// <paramref name="rhs"/> is null.
         /// </exception>
-        /// <returns>The polynomial.</returns>
+        /// <returns>The polynomial in standart view.</returns>
         public static Polynomial operator +(Polynomial lhs, Polynomial rhs)
         {
             if (lhs is null)
@@ -54,7 +54,7 @@ namespace Logic
                 throw new ArgumentNullException(nameof(rhs));
             }
 
-            return Multiplication(lhs, rhs);
+            return Multiply(lhs, rhs);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Logic
         /// <paramref name="lhs"/> is null.
         /// <paramref name="rhs"/> is null.
         /// </exception>
-        /// <returns>The polynomial.</returns>
+        /// <returns>The polynomial in standart view.</returns>
         public static Polynomial operator -(Polynomial lhs, Polynomial rhs)
         {
             if (lhs is null)
@@ -138,28 +138,16 @@ namespace Logic
 
         private static Polynomial Add(Polynomial lhs, Polynomial rhs)
         {
-            int[] degreesResult = new int[lhs.Count + rhs.Count];
-            double[] coefficientResult = new double[lhs.Count + rhs.Count];
+            int[] resultDegrees = new int[lhs.Count + rhs.Count];
+            double[] resultCoefficients = new double[lhs.Count + rhs.Count];
 
-            int indexResultArray = 0;
-            for (int j = 0; j < lhs.Count; j++)
-            {
-                degreesResult[indexResultArray] = lhs._degrees[j];
-                coefficientResult[indexResultArray] = lhs._coefficients[j];
-                indexResultArray++;
-            }
+            CopyDegreesAndCoefficients(lhs, resultCoefficients, resultDegrees, 0);
+            CopyDegreesAndCoefficients(rhs, resultCoefficients, resultDegrees, lhs.Count);
 
-            for (int j = 0; j < rhs.Count; j++)
-            {
-                degreesResult[indexResultArray] = lhs._degrees[j];
-                coefficientResult[indexResultArray] = lhs._coefficients[j];
-                indexResultArray++;
-            }
-
-            return Polynomial.ToStandart(new Polynomial(coefficientResult, degreesResult));
+            return Polynomial.ToStandart(new Polynomial(resultCoefficients, resultDegrees));
         }
 
-        private static Polynomial Multiplication(Polynomial lhs, Polynomial rhs)
+        private static Polynomial Multiply(Polynomial lhs, Polynomial rhs)
         {
             int[] resultDegrees = new int[lhs.Count * rhs.Count];
             double[] resultCoefficients = new double[lhs.Count * rhs.Count];
@@ -180,25 +168,25 @@ namespace Logic
 
         private static Polynomial Subtract(Polynomial lhs, Polynomial rhs)
         {
-            int[] degreesResult = new int[lhs.Count + rhs.Count];
-            double[] coefficientResult = new double[lhs.Count + rhs.Count];
+            int[] resultDegrees = new int[lhs.Count + rhs.Count];
+            double[] resultCoefficients = new double[lhs.Count + rhs.Count];
 
-            int indexResultArray = 0;
-            for (int j = 0; j < lhs.Count; j++)
+            CopyDegreesAndCoefficients(lhs, resultCoefficients, resultDegrees, 0);
+            CopyDegreesAndCoefficients(rhs, resultCoefficients, resultDegrees, lhs.Count, -1);
+
+            return Polynomial.ToStandart(new Polynomial(resultCoefficients, resultDegrees));
+        }
+
+        private static void CopyDegreesAndCoefficients(Polynomial source, double[] destinationCoefficients, int[] destinationDegrees, int startIndex, int signCoefficient = 1)
+        {
+            int indexResultArray = startIndex;
+
+            for (int j = 0; j < source.Count; j++)
             {
-                degreesResult[indexResultArray] = lhs._degrees[j];
-                coefficientResult[indexResultArray] = lhs._coefficients[j];
+                destinationDegrees[indexResultArray] = source._degrees[j];
+                destinationCoefficients[indexResultArray] = source._coefficients[j] * signCoefficient;
                 indexResultArray++;
             }
-
-            for (int j = 0; j < rhs.Count; j++)
-            {
-                degreesResult[indexResultArray] = lhs._degrees[j];
-                coefficientResult[indexResultArray] = lhs._coefficients[j] * (-1);
-                indexResultArray++;
-            }
-
-            return Polynomial.ToStandart(new Polynomial(coefficientResult, degreesResult));
         }
 
         #endregion

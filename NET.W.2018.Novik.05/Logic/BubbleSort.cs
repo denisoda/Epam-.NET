@@ -120,9 +120,10 @@ namespace Logic
 
         #region private methods
 
-        private static void InnerBubbleSortRows(int[][] array, int[] keys, IComparer<int> comparer)
+        private static void InnerBubbleSortRows(int[][] items, int[] keys, IComparer<int> comparer)
         {
             bool isSort = false;
+
             for (int i = 0; i < keys.Length && !isSort; i++)
             {
                 isSort = true;
@@ -130,10 +131,8 @@ namespace Logic
                 {
                     if (comparer.Compare(keys[j], keys[j + 1]) == 1)
                     {
-                        int temp = keys[j];
-                        keys[j] = keys[j + 1];
-                        keys[j + 1] = temp;
-                        SwapRows(array, j, j + 1);
+                        SwapKeys(keys, j, j + 1);
+                        SwapRows(items, j, j + 1);
                         isSort = false;
                     }
                 }
@@ -142,9 +141,9 @@ namespace Logic
 
         private static int[] GetMinRowsElements(int[][] array)
         {
-            int[] result = new int[array.Length];
-
+            int[] minRowsElements = new int[array.Length];
             int find = 0;
+
             for (int i = 0; i < array.Length; i++)
             {
                 find = 0;
@@ -156,17 +155,17 @@ namespace Logic
                     }
                 }
 
-                result[i] = array[i].Length == 0 ? 0 : array[i][find];
+                minRowsElements[i] = array[i].Length == 0 ? 0 : array[i][find];
             }
 
-            return result;
+            return minRowsElements;
         }
 
         private static int[] GetMaxRowsElements(int[][] array)
         {
-            int[] result = new int[array.Length];
-
+            int[] maxRowsElements = new int[array.Length];
             int find = 0;
+
             for (int i = 0; i < array.Length; i++)
             {
                 find = 0;
@@ -178,17 +177,17 @@ namespace Logic
                     }
                 }
 
-                result[i] = array[i].Length == 0 ? 0 : array[i][find];
+                maxRowsElements[i] = array[i].Length == 0 ? 0 : array[i][find];
             }
 
-            return result;
+            return maxRowsElements;
         }
 
         private static int[] GetSumRowsElements(int[][] array)
         {
-            int[] result = new int[array.GetLength(0)];
-
+            int[] totalRows = new int[array.GetLength(0)];
             int sum = 0;
+
             for (int i = 0; i < array.Length; i++)
             {
                 sum = 0;
@@ -197,19 +196,26 @@ namespace Logic
                     sum += array[i][j];
                 }
 
-                result[i] = sum;
+                totalRows[i] = sum;
             }
 
-            return result;
+            return totalRows;
         }
 
-        private static void SwapRows(int[][] array, int i, int j)
+        private static void SwapRows(int[][] array, int indexFirstRow, int indexSecondRow)
         {
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            var temp = array[indexFirstRow];
+            array[indexFirstRow] = array[indexSecondRow];
+            array[indexSecondRow] = temp;
         }
 
-        #endregion // private methods
+        private static void SwapKeys(int[] keys, int indexFirstKey, int indexSecondKey)
+        {
+            int temp = keys[indexFirstKey];
+            keys[indexFirstKey] = keys[indexSecondKey];
+            keys[indexSecondKey] = temp;
+        }
+
+        #endregion // !private methods
     }
 }
