@@ -11,10 +11,10 @@ namespace Logic
     {
         #region Private fields
 
-        private double[] _coefficients;
-        private int[] _degrees;
-        private int _maxDegree;
-        private int hashCode;
+        private readonly double[] _coefficients;
+        private readonly int[] _degrees;
+        private readonly int _maxDegree;
+        private readonly int hashCode;
 
         #endregion
 
@@ -126,7 +126,7 @@ namespace Logic
 
             if (value.IsEmpty)
             {
-                throw new ArithmeticException($"{nameof(value)} must be not empty");
+                return value;
             }
 
             int[] sourceDegrees = value.Degrees;
@@ -151,13 +151,14 @@ namespace Logic
         {
             string result = string.Empty;
             string letter = "x";
+            int lengthToClipping = 3;
 
             for (int i = 0; i < this.Count; i++)
             {
                 result += $"({this._coefficients[i]}{letter}^{this._degrees[i]}) + ";
             }
 
-            return result.Substring(0, result.Length - 3);
+            return result.Substring(0, result.Length - lengthToClipping);
         }
 
         public override bool Equals(object obj)
@@ -181,7 +182,7 @@ namespace Logic
                 isEquals = false;
                 for (int j = 0; j < this.Count; j++)
                 {
-                    if (this._coefficients[i] == lhs._coefficients[j] &&
+                    if (this.AreCoefficientSimilar(this._coefficients[i], lhs._coefficients[j]) &&
                         this._degrees[i] == lhs._degrees[j])
                     {
                         isEquals = true;
@@ -236,7 +237,15 @@ namespace Logic
                 }
             }
 
-            RemoveZeroValues(sourceCoefficients, sourceDegrees, out destinationCoefficients, out destinationDegrees, countNotZeroElements);
+            if (countNotZeroElements != sourceCoefficients.Length)
+            {
+                RemoveZeroValues(sourceCoefficients, sourceDegrees, out destinationCoefficients, out destinationDegrees, countNotZeroElements);
+                return;
+            }
+
+            destinationCoefficients = sourceCoefficients;
+            destinationDegrees = sourceDegrees;
+
         }
 
         private static void RemoveZeroValues(double[] sourceCoefficient, int[] sourceDegrees, out double[] destinationCoefficient, out int[] destinationDegrees, int count)
@@ -313,6 +322,18 @@ namespace Logic
             }
 
             return magic + hashcode;
+        }
+
+        private bool AreCoefficientSimilar(double first, double second)
+        {
+            double accuracy = 0.0001;
+
+            if (Math.Abs(first - second) < accuracy)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion // private methods
