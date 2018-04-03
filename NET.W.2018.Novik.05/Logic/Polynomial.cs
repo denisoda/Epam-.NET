@@ -7,7 +7,7 @@ namespace Logic
     /// <summary>
     /// Immutable class to work with Polynomials.
     /// </summary>
-    public sealed partial class Polynomial : ICloneable
+    public sealed partial class Polynomial : ICloneable, IEquatable<Polynomial>
     {
         #region Private fields
 
@@ -168,22 +168,60 @@ namespace Logic
                 return false;
             }
 
-            Polynomial lhs = (Polynomial)obj;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-            if (this.Count != lhs.Count)
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Polynomial objAsPolynomial = (Polynomial)obj;
+
+            return this.Equals(objAsPolynomial);
+        }
+
+
+        public override int GetHashCode() => this.hashCode;
+
+        object ICloneable.Clone()
+        {
+            return new Polynomial(this.Coefficients, this.Degrees);
+        }
+
+        public bool Equals(Polynomial other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (this.GetType() != other.GetType())
+            {
+                return false;
+            }
+
+            if (this.Count != other.Count)
             {
                 return false;
             }
 
             bool isEquals = true;
 
-            for (int i = 0; i < lhs.Count && isEquals; i++)
+            for (int i = 0; i < other.Count && isEquals; i++)
             {
                 isEquals = false;
                 for (int j = 0; j < this.Count; j++)
                 {
-                    if (this.AreCoefficientSimilar(this._coefficients[i], lhs._coefficients[j]) &&
-                        this._degrees[i] == lhs._degrees[j])
+                    if (this.AreCoefficientSimilar(this._coefficients[i], other._coefficients[j]) &&
+                        this._degrees[i] == other._degrees[j])
                     {
                         isEquals = true;
                     }
@@ -191,13 +229,6 @@ namespace Logic
             }
 
             return isEquals;
-        }
-
-        public override int GetHashCode() => this.hashCode;
-
-        object ICloneable.Clone()
-        {
-            return new Polynomial(this.Coefficients, this.Degrees);
         }
 
         #endregion
