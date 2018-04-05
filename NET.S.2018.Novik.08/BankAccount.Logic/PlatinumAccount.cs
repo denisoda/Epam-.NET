@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BankAccount.Logic.ComputeBonusPoint;
+using System;
 
 namespace BankAccount.Logic
 {
@@ -25,16 +22,30 @@ namespace BankAccount.Logic
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlatinumAccount"/> class.
+        /// </summary>
+        /// <param name="id">The identifier of bank account.</param>
+        /// <param name="name">The name of a holder.</param>
+        /// <param name="balance">The balance.</param>
+        /// <param name="bonusPoint">Bonus points.</param>
+        /// <param name="computeToWithdraw">Strategy to compute bonus points to withdraw.</param>
+        /// <param name="computeToDeposit">Strategy to compute bonus points to deposit.</param>
+        public PlatinumAccount(int id, string name, decimal balance, int bonusPoint, IComputeBonusPoints computeToWithdraw, IComputeBonusPoints computeToDeposit)
+            : base(id, name, balance, bonusPoint, computeToWithdraw, computeToDeposit)
+        {
+        }
+
         #endregion
 
-        protected override int CalculateBonusPointsDeposit(decimal amount)
-        {
-            return 10;
-        }
+        #region Public properties
 
-        protected override int CalculateBonusPointsWithdraw(decimal amount)
-        {
-            return 0;
-        }
+        public override int BonusPointsDeposit { get; protected set; } = 2;
+
+        public override int BonusPointsWithdraw { get; protected set; } = 1;
+
+        public override TypeBankAccount Type { get; protected set; } = TypeBankAccount.Platinum;
+
+        #endregion
     }
 }

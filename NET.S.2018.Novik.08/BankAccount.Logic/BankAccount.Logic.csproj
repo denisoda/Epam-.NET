@@ -42,12 +42,22 @@
   <ItemGroup>
     <Compile Include="BankAccount.cs" />
     <Compile Include="BaseAccount.cs" />
+    <Compile Include="ComputeBonusPoint\IComputeBonusPoints.cs" />
+    <Compile Include="ComputeBonusPoint\DepositBonusPoints.cs" />
+    <Compile Include="ComputeBonusPoint\WithdrawBonusPoints.cs" />
+    <Compile Include="Exceptions\BankAccountAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\BankAccountNotFoundException.cs" />
     <Compile Include="Exceptions\NotEnoughMoneyException.cs" />
     <Compile Include="Factories\BankAccountFactory.cs" />
+    <Compile Include="Factories\BankAccountStorageFactory.cs" />
+    <Compile Include="Factories\IBankAccountFactory.cs" />
+    <Compile Include="Factories\IBankAccountStorageFactory.cs" />
     <Compile Include="GoldAccount.cs" />
     <Compile Include="PlatinumAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BankAccountService.cs" />
     <Compile Include="Services\IBankAccountService.cs" />
+    <Compile Include="Storage\BankAccountStorageBinary.cs" />
     <Compile Include="Storage\IBankAccountStorage.cs" />
     <Compile Include="TypeBankAccount.cs" />
   </ItemGroup>
@@ -58,5 +68,6 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

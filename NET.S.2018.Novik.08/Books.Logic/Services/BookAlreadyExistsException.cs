@@ -10,12 +10,16 @@ namespace Books.Logic.Services
     {
         public BookAlreadyExistsException()
         {
-
         }
 
-        public BookAlreadyExistsException(string message) : base(message)
+        public BookAlreadyExistsException(string message)
+            : base(message)
         {
+        }
 
+        public BookAlreadyExistsException(string message, Exception innerException)
+                    : base(message, innerException)
+        {
         }
     }
 }

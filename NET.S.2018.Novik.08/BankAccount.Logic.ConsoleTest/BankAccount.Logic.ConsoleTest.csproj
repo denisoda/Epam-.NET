@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{397FF548-746E-44C0-9B88-0BB22B51A7D2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Books.Logic</RootNamespace>
-    <AssemblyName>Books.Logic</AssemblyName>
+    <ProjectGuid>{AF95CB8E-5940-4CA1-A7B8-32109BE3B6C7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BankAccount.Logic.ConsoleTest</RootNamespace>
+    <AssemblyName>BankAccount.Logic.ConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,31 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
-    <Compile Include="Factories\BookListStorageFactory.cs" />
-    <Compile Include="Factories\IBookListStorageFactory.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BookAlreadyExistsException.cs" />
-    <Compile Include="Services\BookDoesNotExistException.cs" />
-    <Compile Include="Services\IService.cs" />
-    <Compile Include="Services\BookListService.cs" />
-    <Compile Include="SortByTag\SortsByAuthor.cs" />
-    <Compile Include="SortByTag\SortsByCount.cs" />
-    <Compile Include="SortByTag\SortsByName.cs" />
-    <Compile Include="SortByTag\SortsByPrice.cs" />
-    <Compile Include="SortByTag\SortsByPublisher.cs" />
-    <Compile Include="SortByTag\SortsByISBN.cs" />
-    <Compile Include="SortByTag\SortsByYearOfPublishing.cs" />
-    <Compile Include="Storage\IBookListStorage.cs" />
-    <Compile Include="Storage\BookListStorageBinaryFile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <ProjectReference Include="..\BankAccount.Logic\BankAccount.Logic.csproj">
+      <Project>{738fcf4e-de2d-4b8b-95bd-1338daa793e2}</Project>
+      <Name>BankAccount.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

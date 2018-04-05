@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Books.Logic.Factories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Books.Logic.Factories;
 
 namespace Books.Logic.Services
 {
+    /// <summary>
+    /// Implementation a service to work with list of <see cref="Book"/>.
+    /// </summary>
     public class BookListService : IService
     {
         #region Private fields
@@ -57,7 +58,7 @@ namespace Books.Logic.Services
                 throw new ArgumentNullException(nameof(book));
             }
 
-            if (IsExist(book))
+            if (this.IsExist(book))
             {
                 throw new BookAlreadyExistsException($"{nameof(book)} already exists in the service");
             }
@@ -79,25 +80,34 @@ namespace Books.Logic.Services
                 throw new ArgumentNullException(nameof(book));
             }
 
-            if (!IsExist(book, out int indexRemoveBook))
+            if (!this.IsExist(book, out int indexRemoveBook))
             {
                 throw new BookDoesNotExistException($"{nameof(book)} is not in");
             }
 
             this.listBooks.RemoveAt(indexRemoveBook);
-
         }
 
-        public Book FindBookByTag(IFinder find)
+        /// <summary>
+        /// Find book by name.
+        /// </summary>
+        /// <param name="name">Name of book to find.</param>
+        /// <returns>The </returns>
+        public Book FindBookByName(string name)
         {
-            if (find is null)
+            if (name is null)
             {
-                throw new ArgumentNullException(nameof(find));
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (name == string.Empty)
+            {
+                throw new ArgumentException($"{nameof(name)} must be not empty");
             }
 
             foreach (var book in this.listBooks)
             {
-                if (find.IsSought(book))
+                if (string.Compare(book.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     return book;
                 }
@@ -109,7 +119,10 @@ namespace Books.Logic.Services
         /// <summary>
         /// Sorts By <paramref name="comparer"/>.
         /// </summary>
-        /// <param name="comparer"></param>
+        /// <param name="comparer">Instance that impelemntation <see cref="IComparer{Book}"/>.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="comparer"/> is null.
+        /// </exception>
         public void SortsBooksByTag(IComparer<Book> comparer)
         {
             if (comparer is null)
@@ -120,14 +133,28 @@ namespace Books.Logic.Services
             this.listBooks.Sort(comparer);
         }
 
+        /// <summary>
+        /// Save state of this service in the storage.
+        /// </summary>
         public void SaveInStorage()
         {
             this.storageFactory.GetStorage().Save(this.listBooks);
         }
 
+        /// <summary>
+        /// Converts <see cref="BookListService"/> states of this instance to its equvalent string representation.
+        /// </summary>
+        /// <returns>String.</returns>
         public override string ToString()
         {
-            return $"service contains {this.listBooks.Count} books";
+            string result = string.Empty;
+
+            foreach (var item in this.listBooks)
+            {
+                result += item + "\n";
+            }
+
+            return result;
         }
 
         #endregion !Public methods

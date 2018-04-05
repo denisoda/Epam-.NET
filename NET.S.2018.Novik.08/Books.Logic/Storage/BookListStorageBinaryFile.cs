@@ -1,17 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Books.Logic.Storage
 {
-    class BookListStorageBinaryFile : IBookListStorage
+    /// <summary>
+    /// The books storage is based by binary file.
+    /// </summary>
+    public class BookListStorageBinaryFile : IBookListStorage
     {
+        #region Private fields
 
         private string _path;
 
+        #endregion
+
+        #region Constructors
+
+        public BookListStorageBinaryFile(string path)
+        {
+            this.Path = path;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Path of a file.
+        /// </summary>
         public string Path
         {
             get
@@ -19,7 +37,7 @@ namespace Books.Logic.Storage
                 return this._path;
             }
 
-            set
+            private set
             {
                 if (string.IsNullOrEmpty(value))
                 {
@@ -30,11 +48,14 @@ namespace Books.Logic.Storage
             }
         }
 
-        public BookListStorageBinaryFile(string path)
-        {
-            this.Path = path;
-        }
+        #endregion
 
+        #region Public methods
+
+        /// <summary>
+        /// Load <see cref="Book"/> from the binary file.
+        /// </summary>
+        /// <returns>Load sequence of <see cref="Book"/>.</returns>
         public IEnumerable<Book> Load()
         {
             List<Book> listLoadBooks = new List<Book>();
@@ -62,6 +83,13 @@ namespace Books.Logic.Storage
             return listLoadBooks;
         }
 
+        /// <summary>
+        /// Save sequence of <see cref="Book"/> to the storage.
+        /// </summary>
+        /// <param name="items">The sequence of <see cref="Book"/>.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items"/> is null.
+        /// </exception>
         public void Save(IEnumerable<Book> items)
         {
             if (items is null)
@@ -76,7 +104,7 @@ namespace Books.Logic.Storage
                     foreach (var book in items)
                     {
                         binaryWriter.Write(book.ISBN);
-                        binaryWriter.Write(book.Autor);
+                        binaryWriter.Write(book.Author);
                         binaryWriter.Write(book.Name);
                         binaryWriter.Write(book.Publisher);
                         binaryWriter.Write(book.YearOfPublishing);
@@ -86,5 +114,7 @@ namespace Books.Logic.Storage
                 }
             }
         }
+
+        #endregion
     }
 }
