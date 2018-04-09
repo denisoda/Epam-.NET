@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BubbleSort.cs" />
+    <Compile Include="BubbleSortDelegate.cs" />
     <Compile Include="DefaultOrder.cs" />
+    <Compile Include="DelegateComparer.cs" />
     <Compile Include="DescendingOrder.cs" />
+    <Compile Include="KeysForSort.cs" />
     <Compile Include="Polynomial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

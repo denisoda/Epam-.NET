@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BubbleSortDelegateTests.cs" />
     <Compile Include="BubbleSortTests.cs" />
     <Compile Include="PolynomialTests\PolynomialBaseFuncTests.cs" />
     <Compile Include="PolynomialTests\PolynomialOperationTests.cs" />

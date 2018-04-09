@@ -18,7 +18,7 @@ namespace Books.Logic.SortByTag
                 throw new ArgumentNullException(nameof(rhs));
             }
 
-            return string.Compare(lhs.Name, rhs.Name, StringComparison.InvariantCultureIgnoreCase);
+            return string.Compare(lhs.Title, rhs.Title, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

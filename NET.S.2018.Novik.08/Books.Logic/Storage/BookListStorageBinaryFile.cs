@@ -105,7 +105,7 @@ namespace Books.Logic.Storage
                     {
                         binaryWriter.Write(book.ISBN);
                         binaryWriter.Write(book.Author);
-                        binaryWriter.Write(book.Name);
+                        binaryWriter.Write(book.Title);
                         binaryWriter.Write(book.Publisher);
                         binaryWriter.Write(book.YearOfPublishing);
                         binaryWriter.Write(book.Count);

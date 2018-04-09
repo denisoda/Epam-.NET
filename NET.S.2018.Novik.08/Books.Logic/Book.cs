@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Books.Logic
@@ -7,13 +8,13 @@ namespace Books.Logic
     /// <summary>
     /// Entity of book.
     /// </summary>
-    public class Book : IEquatable<Book>, IComparable<Book>
+    public class Book : IEquatable<Book>, IComparable<Book>, IFormattable
     {
         #region Private fields
 
         private string _ISBN;
         private string _author;
-        private string _name;
+        private string _title;
         private string _publisher;
         private int _yearOfPublishing;
         private int _count;
@@ -37,7 +38,7 @@ namespace Books.Logic
         {
             this.ISBN = ISBN;
             this.Author = author;
-            this.Name = name;
+            this.Title = name;
             this.Publisher = publisher;
             this.YearOfPublishing = yearOfPublishing;
             this.Count = count;
@@ -105,11 +106,11 @@ namespace Books.Logic
         /// <summary>
         /// The name this book.
         /// </summary>
-        public string Name
+        public string Title
         {
             get
             {
-                return this._name;
+                return this._title;
             }
 
             set
@@ -124,7 +125,7 @@ namespace Books.Logic
                     throw new ArgumentException($"{nameof(value)} must be not empty");
                 }
 
-                this._name = value;
+                this._title = value;
             }
         }
 
@@ -227,7 +228,7 @@ namespace Books.Logic
         /// <returns>String.</returns>
         public override string ToString()
         {
-            string bookAsString = $"[\"ISBN\":{this.ISBN}; \"Autor\": {this.Author}; \"Name\": {this.Name}; \"Publisher\": {this.Publisher}; " +
+            string bookAsString = $"[\"ISBN\":{this.ISBN}; \"Autor\": {this.Author}; \"Name\": {this.Title}; \"Publisher\": {this.Publisher}; " +
                 $"\"YearOfPublishing\": {this.YearOfPublishing}; \"Count\": {this.Count}; \"Price\": {this.Price}]";
             return bookAsString;
         }
@@ -307,7 +308,7 @@ namespace Books.Logic
                 return -1;
             }
 
-            if (string.Compare(this.Name, other.Name, StringComparison.InvariantCultureIgnoreCase) != 0)
+            if (string.Compare(this.Title, other.Title, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
                 return -1;
             }
@@ -338,8 +339,37 @@ namespace Books.Logic
             }
 
             return 0;
+        }
 
-            // TODO: Know how to use CompareTo
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(format))
+            {
+                format = "BATPYNP";
+            }
+
+            if (formatProvider == null)
+            {
+                formatProvider = CultureInfo.CurrentCulture;
+            }
+
+            switch (format.ToUpperInvariant())
+            {
+                case "IATPYCP":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages, {this.Price.ToString("C", formatProvider)}";
+                case "IATPYC":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages";
+                case "IATPY":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}";
+                case "IATP":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}";
+                case "AT":
+                    return $"{this.Author} - {this.Title}";
+                case "IAT":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}";
+            }
+
+            throw new FormatException("Unsupported format: " + format);
         }
 
         #endregion Public methods

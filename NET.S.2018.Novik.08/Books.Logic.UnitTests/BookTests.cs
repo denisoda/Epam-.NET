@@ -94,6 +94,30 @@ namespace Books.Logic.UnitTests
             Assert.IsTrue(firstBook.Equals(secondBook) && secondBook.Equals(thirdBook) && thirdBook.Equals(firstBook));
         }
 
-        #endregion test implemenatation inrefaces
+        #endregion test implemenatation intefaces
+
+        #region test string format
+
+        [Test]
+        [TestCase("AT", ExpectedResult = "Эндрю Троелсон - C# 6.0")]
+        [TestCase("IAT", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0")]
+        [TestCase("IATP", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0, Apress")]
+        [TestCase("IATPY", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0, Apress, 2018")]
+        [TestCase("IATPYC", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0, Apress, 2018, 1431 pages")]
+        [TestCase("IATPYCP", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0, Apress, 2018, 1431 pages, $80.00")]
+        public string BookFormat_Succed(string format)
+        {
+            Book bookToFormat = new Book("978-5-905463-15-0", "Эндрю Троелсон", "C# 6.0", "Apress", 2018, 1431, 80);
+            return bookToFormat.ToString(format, null);
+        }
+
+        [TestCase("IATPYCP+", ExpectedResult = "978-5-905463-15-0. Эндрю Троелсон - C# 6.0, Apress, 2018, 1431 pages, $80.00")]
+        public string BookCustomFormat_Succed(string format)
+        {
+            Book bookToFormat = new Book("978-5-905463-15-0", "Эндрю Троелсон", "C# 6.0", "Apress", 2018, 1431, 80);
+            return string.Format(new CustomBookFormat(), format, bookToFormat);
+        }
+
+        #endregion
     }
 }

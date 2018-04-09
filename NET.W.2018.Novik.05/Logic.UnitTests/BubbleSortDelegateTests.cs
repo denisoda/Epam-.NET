@@ -5,65 +5,64 @@ using NUnit.Framework;
 
 namespace Logic.UnitTests
 {
-    [TestFixture]
-    class BubbleSortTests
+    class BubbleSortDelegateTests
     {
         #region tests
 
         [Test, TestCaseSource("GetJuggedSumRows")]
-        public int[][] Test_BubbleSortBySumElemntsRows_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_BySumElemntsRows_Succed(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetSumRowsElements(array), new DefaultOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetSumRowsElements(array), new Comparison<int>((a, b) => a.CompareTo(b)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedSumRowsDesc")]
-        public int[][] Test_BubbleSortBySumElemntsRowsDesc_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_BySumElemntsRowsDesc_Succed(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetSumRowsElements(array), new DescendingOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetSumRowsElements(array), new Comparison<int>((a, b) => b.CompareTo(a)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedMaxElemRows")]
-        public int[][] Test_BubbleSortByMaxElemntsRows_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_ByMaxElemntsRows_Succed(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetMaxRowsElements(array), new DefaultOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetMaxRowsElements(array), new Comparison<int>((a, b) => a.CompareTo(b)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedMaxElemRowsDesc")]
-        public int[][] Test_BubbleSortByMaxElemntsRowsDesc_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_ByMaxElemntsRowsDesc_Succed(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetMaxRowsElements(array), new DescendingOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetMaxRowsElements(array), new Comparison<int>((a, b) => b.CompareTo(a)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedMinElemRows")]
-        public int[][] Test_BubbleSortByMinElemntsRows_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_ByMinElemntsRows_Succed(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetMinRowsElements(array), new DefaultOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetMinRowsElements(array), new Comparison<int>((a, b) => a.CompareTo(b)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedMinElemRowsDesc")]
-        public int[][] Test_BubbleSortByMinElemntsRowsDesc_CorrectValues(Func<int[][]> func)
+        public int[][] BubbleSortDelegate_ByMinElemntsRowsDesc_CorrectValues(Func<int[][]> func)
         {
             int[][] array = func();
-            BubbleSort.SortRows(array, KeysForSort.GetMinRowsElements(array), new DescendingOrder());
+            BubbleSortDelegate.SortRows(array, KeysForSort.GetMinRowsElements(array), new Comparison<int>((a, b) => b.CompareTo(a)));
             return array;
         }
 
         [Test, TestCaseSource("GetJuggedArgumentNullException")]
-        public void Test_BubbleSort_Null_ArgumentNullException(Func<int[][]> func)
+        public void BubbleSortDelegate_ArgumentNullException(Func<int[][]> func)
         {
             int[][] array = func();
-            int[] keys = { };
-            Assert.Throws<ArgumentNullException>(() => BubbleSort.SortRows(array, keys , new DescendingOrder()));
+            int[] keys = null;
+            Assert.Throws<ArgumentNullException>(() => BubbleSortDelegate.SortRows(array, keys, new Comparison<int>((a, b) => a.CompareTo(b))));
         }
 
         #endregion !tests
@@ -281,3 +280,4 @@ namespace Logic.UnitTests
         #endregion // sources for tests
     }
 }
+

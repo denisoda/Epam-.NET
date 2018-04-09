@@ -107,7 +107,7 @@ namespace Books.Logic.Services
 
             foreach (var book in this.listBooks)
             {
-                if (string.Compare(book.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0)
+                if (string.Compare(book.Title, name, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     return book;
                 }

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 namespace Logic
 {
-    /// <summary>
-    /// Implementation sort jugged array by bubble sort.
-    /// </summary>
-    public static class BubbleSort
+    public class BubbleSortDelegate
     {
         #region public methods
 
@@ -15,13 +12,13 @@ namespace Logic
         /// </summary>
         /// <param name="array">The jugged Array to sort.</param>
         /// <param name="keys">Keys to sort.</param>
-        /// <param name="comparer">The instance of class that implementation IComparer to define order sort.</param>
+        /// <param name="comparator">The delegate to define order sort.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="array"/> is null.
         /// <paramref name="comparer"/> is null.
         /// <paramref name="keys"/> is null.
         /// </exception>
-        public static void SortRows(int[][] array, int[] keys, IComparer<int> comparer)
+        public static void SortRows(int[][] array, int[] keys, Comparison<int> comparator)
         {
             if (array is null)
             {
@@ -33,19 +30,19 @@ namespace Logic
                 throw new ArgumentNullException(nameof(keys));
             }
 
-            if (comparer is null)
+            if (comparator is null)
             {
-                throw new ArgumentNullException(nameof(comparer));
+                throw new ArgumentNullException(nameof(comparator));
             }
 
-            InnerBubbleSortRows(array, keys, comparer.Compare);
+            InnerBubbleSortRows(array, keys, new DelegateComparer(comparator));
         }
 
         #endregion // public methods
 
         #region private methods
 
-        private static void InnerBubbleSortRows(int[][] items, int[] keys, Comparison<int> comparison)
+        private static void InnerBubbleSortRows(int[][] items, int[] keys, IComparer<int> comparer)
         {
             bool isSort = false;
 
@@ -54,7 +51,7 @@ namespace Logic
                 isSort = true;
                 for (int j = 0; j < keys.Length - i - 1; j++)
                 {
-                    if (comparison(keys[j], keys[j + 1]) == 1)
+                    if (comparer.Compare(keys[j], keys[j + 1]) == 1)
                     {
                         SwapKeys(keys, j, j + 1);
                         SwapRows(items, j, j + 1);
