@@ -345,7 +345,7 @@ namespace Books.Logic
         {
             if (string.IsNullOrEmpty(format))
             {
-                format = "BATPYNP";
+                format = "IATPYCP";
             }
 
             if (formatProvider == null)
@@ -363,13 +363,13 @@ namespace Books.Logic
                     return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}";
                 case "IATP":
                     return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}";
-                case "AT":
-                    return $"{this.Author} - {this.Title}";
                 case "IAT":
                     return $"{this.ISBN}. {this.Author} - {this.Title}";
+                case "AT":
+                    return $"{this.Author} - {this.Title}";
             }
 
-            throw new FormatException("Unsupported format: " + format);
+            throw new FormatException($"{format} is not supported");
         }
 
         #endregion Public methods

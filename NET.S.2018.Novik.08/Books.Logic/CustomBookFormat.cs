@@ -42,7 +42,7 @@ namespace Books.Logic
                 return $"{book.ISBN}. {book.Author} - {book.Title}, {book.Publisher}, {book.YearOfPublishing}, {book.Count} pages, {book.Price.ToString("C", formatProvider)}";
             }
 
-            throw new FormatException("Unsupported format: " + format);
+            throw new FormatException($"{format} is not supported");
         }
     }
 }
