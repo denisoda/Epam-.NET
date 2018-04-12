@@ -34,6 +34,9 @@ namespace Books.Logic
         /// <param name="yearOfPublishing">Year of publication.</param>
         /// <param name="count">Count of pages.</param>
         /// <param name="price">The price.</param>
+        /// <exception cref="ArgumentException">
+        /// If any parameters does not match format.
+        /// </exception>
         public Book(string ISBN, string author, string name, string publisher, int yearOfPublishing, int count, decimal price)
         {
             this.ISBN = ISBN;
@@ -62,15 +65,15 @@ namespace Books.Logic
 
             set
             {
-                string patternISBN = @"\d{1,3}-\d{1,3}-\d{1,6}-\d{1,5}-\d{1}";
                 if (value is null)
                 {
                     throw new ArgumentNullException(nameof(value));
                 }
 
+                const string patternISBN = @"\d{1,3}-\d{1,3}-\d{1,6}-\d{1,5}-\d{1}";
                 if (!Regex.IsMatch(value, patternISBN))
                 {
-                    throw new ArgumentException($"{nameof(value)} must be in correct format");
+                    throw new ArgumentException($"{nameof(value)} must match correct format.");
                 }
 
                 this._ISBN = value;
@@ -233,6 +236,37 @@ namespace Books.Logic
             return bookAsString;
         }
 
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrEmpty(format))
+            {
+                format = "IATPYCP";
+            }
+
+            if (formatProvider == null)
+            {
+                formatProvider = CultureInfo.CurrentCulture;
+            }
+
+            switch (format.ToUpperInvariant())
+            {
+                case "IATPYCP":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages, {this.Price.ToString("C", formatProvider)}";
+                case "IATPYC":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages";
+                case "IATPY":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}";
+                case "IATP":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}";
+                case "IAT":
+                    return $"{this.ISBN}. {this.Author} - {this.Title}";
+                case "AT":
+                    return $"{this.Author} - {this.Title}";
+            }
+
+            throw new FormatException($"{format} is not supported");
+        }
+
         /// <summary>
         /// Returns a value indicating  wheter this instance is equal to a specified <see cref="Book"/> instance.
         /// </summary>
@@ -257,7 +291,7 @@ namespace Books.Logic
                 return false;
             }
 
-            return this.CompareTo(other) == 0;
+            return this.InnerCompare(other);
         }
 
         /// <summary>
@@ -296,82 +330,71 @@ namespace Books.Logic
             return this.ToString().GetHashCode();
         }
 
+        /// <summary>
+        /// Compares the current instance with another object of the <see cref="Book"/> and returns
+        /// an integer that indicates whether the current instance precedes.
+        /// </summary>
+        /// <param name="other">A object of <see cref="Book"/> to compare with this instance.</param>
+        /// <returns>
+        /// A value that indicates the relative order of the <see cref="Book"/> being compared.
+        /// If <paramref name="other"/> is same then return 0.
+        /// If <paramref name="other"/> less than this instance then return 1.
+        /// If <paramref name="other"/> greater than this instance then return -1.
+        /// </returns>
         public int CompareTo(Book other)
         {
             if (other is null)
             {
-                throw new ArgumentNullException(nameof(other));
+                return 1;
             }
 
+            return this.Price.CompareTo(other.Price);
+        }
+
+        #endregion Public methods
+
+        #region Private methods
+
+        private bool InnerCompare(Book other)
+        {
             if (string.Compare(this.ISBN, other.ISBN, StringComparison.Ordinal) != 0)
             {
-                return -1;
+                return false;
             }
 
             if (string.Compare(this.Title, other.Title, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                return -1;
+                return false;
             }
 
             if (string.Compare(this.Author, other.Author, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                return -1;
+                return false;
             }
 
             if (string.Compare(this.Publisher, other.Publisher, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
-                return -1;
+                return false;
             }
 
             if (this.YearOfPublishing != other.YearOfPublishing)
             {
-                return -1;
+                return false;
             }
 
             if (this.Count != other.Count)
             {
-                return -1;
+                return false;
             }
 
             if (this.Price != other.Price)
             {
-                return -1;
+                return false;
             }
 
-            return 0;
+            return true;
         }
 
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            if (string.IsNullOrEmpty(format))
-            {
-                format = "IATPYCP";
-            }
-
-            if (formatProvider == null)
-            {
-                formatProvider = CultureInfo.CurrentCulture;
-            }
-
-            switch (format.ToUpperInvariant())
-            {
-                case "IATPYCP":
-                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages, {this.Price.ToString("C", formatProvider)}";
-                case "IATPYC":
-                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}, {this.Count} pages";
-                case "IATPY":
-                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}, {this.YearOfPublishing}";
-                case "IATP":
-                    return $"{this.ISBN}. {this.Author} - {this.Title}, {this.Publisher}";
-                case "IAT":
-                    return $"{this.ISBN}. {this.Author} - {this.Title}";
-                case "AT":
-                    return $"{this.Author} - {this.Title}";
-            }
-
-            throw new FormatException($"{format} is not supported");
-        }
-
-        #endregion Public methods
+        #endregion
     }
 }

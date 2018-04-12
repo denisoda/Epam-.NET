@@ -44,7 +44,7 @@ namespace BankAccount.Logic
 
         public override int BonusPointsWithdraw { get; protected set; } = 6;
 
-        public override TypeBankAccount Type { get; protected set; } = TypeBankAccount.Base;
+        public override TypeBankAccount Type { get; } = TypeBankAccount.Base;
 
         #endregion
     }

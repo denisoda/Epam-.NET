@@ -14,7 +14,8 @@ namespace Books.Logic.ConsoleTests
         static void Main(string[] args)
         {
             var bookService = new BookListService(new BookListStorageFactory());
-            bookService.AddBook(new Book("978-5-905463-15-0", "Эндрю Троелсон", "C# 6.0", "Apress", 2018, 1431, 10000));
+            var book = new Book("978-5-905463-15-0", "Эндрю Троелсон", "C# 6.0", "Apress", 2018, 1431, 10000);
+            bookService.AddBook(book);
 
             bookService.SaveInStorage();
 

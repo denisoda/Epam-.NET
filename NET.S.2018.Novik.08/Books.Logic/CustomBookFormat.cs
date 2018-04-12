@@ -32,7 +32,7 @@ namespace Books.Logic
         {
             if (arg == null || format != "IATPYCP+")
             {
-                return string.Format(this.parent, "{0:" + format + "}", arg);
+                return string.Format(this.parent, format, arg);
             }
 
             var book = arg as Book;

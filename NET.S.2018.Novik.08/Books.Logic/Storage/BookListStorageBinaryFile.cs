@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using NLog;
 
 namespace Books.Logic.Storage
 {
@@ -13,11 +14,16 @@ namespace Books.Logic.Storage
         #region Private fields
 
         private string _path;
+        private static Logger log = LogManager.GetCurrentClassLogger();
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookListStorageBinaryFile"/> class by <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">Path to file.</param>
         public BookListStorageBinaryFile(string path)
         {
             this.Path = path;

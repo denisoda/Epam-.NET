@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 
 namespace Books.Logic.Services
 {
@@ -14,6 +15,7 @@ namespace Books.Logic.Services
 
         private readonly IBookListStorageFactory storageFactory;
         private List<Book> listBooks;
+        private static Logger Log = LogManager.GetCurrentClassLogger();
 
         #endregion
 
@@ -58,11 +60,16 @@ namespace Books.Logic.Services
                 throw new ArgumentNullException(nameof(book));
             }
 
+            Log.Debug($"The book \"{book.ToString("IAT", null)}\" is adding in the service");
+            Log.Debug($"Check to exist");
+
             if (this.IsExist(book))
             {
+                Log.Info($"The book \"{book.ToString("IAT", null)}\" already exist");
                 throw new BookAlreadyExistsException($"{nameof(book)} already exists in the service");
             }
 
+            Log.Info($"The book \"{book.ToString("IAT", null)}\" has added in the service");
             this.listBooks.Add(book);
         }
 

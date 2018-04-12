@@ -173,7 +173,7 @@ namespace BankAccount.Logic
 
         public abstract int BonusPointsDeposit { get; protected set; }
 
-        public abstract TypeBankAccount Type { get; protected set; }
+        public abstract TypeBankAccount Type { get; }
 
         #endregion
 
