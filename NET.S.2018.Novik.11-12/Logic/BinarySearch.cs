@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Logic
 {
     /// <summary>
-    /// Provides methods for sort 
+    /// Provides methods for sort.
     /// </summary>
     public class BinarySearch
     {

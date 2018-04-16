@@ -13,21 +13,22 @@ namespace Timer.ConsoleTests
         static void Main(string[] args)
         {
             CoCoClock clock = new CoCoClock();
-            clock.Ring += Clock_Ring;
-            Thread thread = new Thread (() => clock.Set(new TimeSpan(1,0,0)));
-            thread.Priority = ThreadPriority.Lowest;
-            thread.Start();
-            while (true)
-            {
-                Console.WriteLine("something doing");
-                Thread.Sleep(10);
-            }
+            People vasya = new People() { Name = "Vasya", Age = 13 };
 
+            clock.Ring += Clock_Ring;
+            clock.Ring += vasya.GetUp;
+
+            clock.Set(new TimeSpan(0, 0, 30));
+            //var ar = action.BeginInvoke(null, null);
+            //while (!ar.IsCompleted)
+            //{
+            //    Console.WriteLine("sleeeeeep");
+            //}
         }
 
         private static void Clock_Ring(object sender, RingEventArgs e)
         {
-            Console.WriteLine($"{e.Time.Milliseconds} is gone. {e.Message}");
+            Console.WriteLine($"\t{e.Time.ToString()} is gone. {e.Message}");
         }
     }
 }

@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{600C1CF3-6A84-488A-B7AC-C5CB976B299C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Timer.ConsoleTests</RootNamespace>
-    <AssemblyName>Timer.ConsoleTests</AssemblyName>
+    <ProjectGuid>{FEC344FD-32F1-4E1A-BB65-33B46205802A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logic</RootNamespace>
+    <AssemblyName>Logic</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -42,18 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="People.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Matrixs\ChangeElementMatrixEventArgs.cs" />
+    <Compile Include="Matrixs\DioganalMatrix.cs" />
+    <Compile Include="Matrixs\MatrixOperation.cs" />
+    <Compile Include="Matrixs\SquareMatrix.cs" />
+    <Compile Include="Matrixs\SymmetricalMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queue\QueueEnumerator.cs" />
+    <Compile Include="Queue\QueueViaArrayOld.cs" />
+    <Compile Include="Queue\QueueViaList.cs" />
+    <Compile Include="Queue\QueueViaWiseArray.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{6121967c-94cd-4f7b-a086-abcc850f8e98}</Project>
-      <Name>Logic</Name>
-    </ProjectReference>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
