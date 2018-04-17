@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logic.Queue
+namespace Logic.UnitTests.Queue
 {
     public class QueueViaArrayOld : IEnumerable<string>
     {

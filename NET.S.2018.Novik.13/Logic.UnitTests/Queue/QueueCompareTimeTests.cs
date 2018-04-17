@@ -10,123 +10,26 @@ namespace Logic.UnitTests.Queue
     public class QueueCompareTimeTests
     {
         [Test]
-        public void QueueTest_Dequeue_Succed()
-        {
-            QueueViaWiseArray<string> a = new QueueViaWiseArray<string>(1);
-            a.Enqueue("A");
-            a.Enqueue("B");
-            a.Enqueue("C");
-            a.Dequeue();
-            a.Dequeue();
-            a.Dequeue();
-            a.Enqueue("A");
-
-            string result = string.Empty;
-            foreach (var item in a)
-            {
-                result += item + " ";
-            }
-
-            Assert.Pass(result);
-        }
-
-        [Test]
         public void QueueViaWiseArrayTests_Time()
         {
-            QueueViaWiseArray<string> queue = new QueueViaWiseArray<string>(5);
-            Stopwatch stopwatch = new Stopwatch();
+            QueueViaWiseArray<string> queue = new QueueViaWiseArray<string>(30);
 
-            stopwatch.Start();
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            for (int i = 0; i < 10000; i++)
+            {
+                queue.Enqueue("A");
+            }
+
+            for (int i = 0; i < 1000; i++)
+            {
+                queue.Dequeue();
+            }
+
+            for (int i = 0; i < 500; i++)
+            {
+                queue.Enqueue("A");
+            }         
             stopwatch.Stop();
 
             Assert.Pass(stopwatch.Elapsed.ToString());
@@ -134,102 +37,26 @@ namespace Logic.UnitTests.Queue
         }
 
         [Test]
-        public void QueueViaList_Time()
+        public void QueueViaLinkedList_Time()
         {
-            QueueViaList<string> queue = new QueueViaList<string>(5);
+            QueueViaLinkedList<string> queue = new QueueViaLinkedList<string>(5);
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
+            for (int i = 0; i < 10000; i++)
+            {
+                queue.Enqueue("A");
+            }
+
+            for (int i = 0; i < 1000; i++)
+            {
+                queue.Dequeue();
+            }
+
+            for (int i = 0; i < 500; i++)
+            {
+                queue.Enqueue("A");
+            }
             stopwatch.Stop();
 
             Assert.Pass(stopwatch.Elapsed.ToString());
@@ -242,96 +69,20 @@ namespace Logic.UnitTests.Queue
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
+            for (int i = 0; i < 10000; i++)
+            {
+                queue.Enqueue("A");
+            }
+
+            for (int i = 0; i < 1000; i++)
+            {
+                queue.Dequeue();
+            }
+
+            for (int i = 0; i < 500; i++)
+            {
+                queue.Enqueue("A");
+            }
             stopwatch.Stop();
 
             Assert.Pass(stopwatch.Elapsed.ToString());
@@ -344,96 +95,20 @@ namespace Logic.UnitTests.Queue
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Dequeue();
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
-            queue.Enqueue("A");
-            queue.Enqueue("B");
-            queue.Enqueue("C");
+            for (int i = 0; i < 10000; i++)
+            {
+                queue.Enqueue("A");
+            }
+
+            for (int i = 0; i < 1000; i++)
+            {
+                queue.Dequeue();
+            }
+
+            for (int i = 0; i < 500; i++)
+            {
+                queue.Enqueue("A");
+            }
             stopwatch.Stop();
 
             Assert.Pass(stopwatch.Elapsed.ToString());

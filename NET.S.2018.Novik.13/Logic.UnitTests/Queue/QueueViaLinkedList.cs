@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logic.Queue
+namespace Logic.UnitTests.Queue
 {
-    public class QueueViaList<T>
+    public class QueueViaLinkedList<T>
     {
-        private List<T> list;
+        private LinkedList<T> list;
 
-        public QueueViaList(int capacity)
+        public QueueViaLinkedList(int capacity)
         {
-            list = new List<T>(capacity);
+            list = new LinkedList<T>();
         }
 
         public void Enqueue(T obj)
         {
-            this.list.Add(obj);
+            this.list.AddLast(obj);
         }
 
         public void Dequeue()
@@ -25,7 +25,7 @@ namespace Logic.Queue
                 throw new InvalidOperationException();
             }
 
-            this.list.RemoveAt(0);
+            this.list.RemoveFirst();
         }
     }
 }

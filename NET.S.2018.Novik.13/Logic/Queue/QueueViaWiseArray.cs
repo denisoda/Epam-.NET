@@ -29,6 +29,7 @@ namespace Logic.Queue
         public QueueViaWiseArray()
             : this(1)
         {
+            //TODO: add default capacity.
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Logic.Queue
 
         private bool IsEnoughSpace => this._count + 1 <= this.container.Length;
 
-        private bool IsEndArray => this.tail + 1 > this.container.Length - 1;
+        private bool TailInTheEnd => this.tail + 1 > this.container.Length - 1;
 
         #endregion
 
@@ -92,7 +93,7 @@ namespace Logic.Queue
 
             if (this.IsEnoughSpace)
             {
-                if (this.IsEndArray)
+                if (this.TailInTheEnd)
                 {
                     this.tail = -1;
                 }
@@ -106,7 +107,7 @@ namespace Logic.Queue
                 }
                 else
                 {
-                    this.ExtendsContainerRightSide(ref this.container, this.capacity);
+                    this.ExtendsContainerRigthSide(ref this.container, this.capacity);
                 }
             }
 
@@ -134,12 +135,12 @@ namespace Logic.Queue
                 this.head = 0;
             }
 
-            T headElement = this.container[this.head];
+            T result = this.container[this.head];
             this.container[this.head] = default(T);
             this.head++;
             this._count--;
 
-            return headElement;
+            return result;
         }
 
         /// <summary>
@@ -211,7 +212,7 @@ namespace Logic.Queue
             array = newArray;
         }
 
-        private void ExtendsContainerRightSide(ref T[] array, int capacity)
+        private void ExtendsContainerRigthSide(ref T[] array, int capacity)
         {
             Array.Resize(ref array, array.Length + capacity);
         }

@@ -8,23 +8,23 @@ namespace Logic.Queue
     /// Queue's enumeration.
     /// </summary>
     /// <typeparam name="T">Type elements in array.</typeparam>
-    public class QueueEnumerator<T> : IEnumerator<T>
+    public struct QueueEnumerator<T> : IEnumerator<T>
     {
         #region private fields
 
-        private T[] aggregate;
-        private int tailQueue;
-        private int headQueue;
-        private int countQueue;
-        private int position;
-        private int count;
+        private readonly T[] aggregate;
+        private readonly int queueTail;
+        private readonly int queueHead;
+        private readonly int queueCount;
+        private int currentIndex;
+        private int currentCount;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QueueEnumerator{T}"/> class.
+        /// Initializes a new instance of the <see cref="QueueEnumerator{T}"/> structure.
         /// </summary>
         /// <param name="aggregate">The array to enum.</param>
         /// <param name="tail">The tail of a queue.</param>
@@ -38,54 +38,64 @@ namespace Logic.Queue
             }
 
             this.aggregate = aggregate;
-            this.tailQueue = tail;
-            this.headQueue = head;
-            this.countQueue = count;
-            this.position = head - 1;
-            this.count = 0;
+            this.queueTail = tail;
+            this.queueHead = head;
+            this.queueCount = count;
+            this.currentIndex = head - 1;
+            this.currentCount = 0;
         }
 
         #endregion
 
         #region Properties
 
-        private bool IsEndAggreagte => this.position == this.aggregate.Length - 1;
+        private bool IsEndAggreagte => this.currentIndex == this.aggregate.Length - 1;
 
         #endregion
 
         #region Implementation IEnumerator
 
-        public T Current => this.aggregate[this.position];
+        public T Current
+        {
+            get
+            {
+                if (this.currentIndex == -1 || this.currentIndex == this.queueCount)
+                {
+                    throw new InvalidOperationException();
+                }
 
-        object IEnumerator.Current => (object)this.aggregate[this.position];
+                return this.aggregate[this.currentIndex];
+            }
+        }
+
+        object IEnumerator.Current => (object)this.aggregate[this.currentIndex];
 
         public void Dispose()
         {
-            this.aggregate = null;
         }
 
         public bool MoveNext()
         {
-            if (this.count >= this.countQueue)
+            if (this.currentCount >= this.queueCount)
             {
                 return false;
             }
 
             if (this.IsEndAggreagte)
             {
-                this.position = -1;
+                this.currentIndex = -1;
             }
 
-            this.position++;
-            this.count++;
+            this.currentIndex++;
+            this.currentCount++;
 
             return true;
         }
 
         public void Reset()
         {
-            this.position = this.tailQueue;
-            this.count = 0;
+            this.currentIndex = this.queueTail;
+            this.currentCount = 0;
         }
 
         #endregion

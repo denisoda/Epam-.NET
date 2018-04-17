@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryTree\BinarySearchTree.cs" />
+    <Compile Include="BinaryTree\Node.cs" />
     <Compile Include="Matrixs\ChangeElementMatrixEventArgs.cs" />
     <Compile Include="Matrixs\DioganalMatrix.cs" />
     <Compile Include="Matrixs\MatrixOperation.cs" />
@@ -47,8 +49,6 @@
     <Compile Include="Matrixs\SymmetricalMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\QueueEnumerator.cs" />
-    <Compile Include="Queue\QueueViaArrayOld.cs" />
-    <Compile Include="Queue\QueueViaList.cs" />
     <Compile Include="Queue\QueueViaWiseArray.cs" />
   </ItemGroup>
   <ItemGroup>

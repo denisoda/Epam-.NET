@@ -53,6 +53,8 @@
     <Compile Include="MatrixsTests\SymmetricalMatrixTests.cs" />
     <Compile Include="Queue\QueueCompareTimeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queue\QueueViaArrayOld.cs" />
+    <Compile Include="Queue\QueueViaLinkedList.cs" />
     <Compile Include="Queue\QueueViaWiseArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>
