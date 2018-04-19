@@ -75,7 +75,7 @@ namespace Logic.Queue
 
         public bool IsEmpty => this.Count == 0;
 
-        private bool IsEnoughSpace => this._count + 1 <= this.container.Length;
+        private bool IsEnoughSize => this._count + 1 <= this.container.Length;
 
         private bool TailInTheEnd => this.tail + 1 > this.container.Length - 1;
 
@@ -89,9 +89,7 @@ namespace Logic.Queue
         /// <param name="obj">The element to add.</param>
         public void Enqueue(T obj)
         {
-            //TODO: do less.
-
-            if (this.IsEnoughSpace)
+            if (this.IsEnoughSize)
             {
                 if (this.TailInTheEnd)
                 {
@@ -100,15 +98,7 @@ namespace Logic.Queue
             }
             else
             {
-                if (this.tail < this.head)
-                {
-                    this.ExtendsContainerInMiddle(ref this.container, this.capacity);
-                    this.head = this.head + this.capacity;
-                }
-                else
-                {
-                    this.ExtendsContainerRigthSide(ref this.container, this.capacity);
-                }
+                this.ExtendsQueueSize();
             }
 
             this.tail++;
@@ -191,25 +181,42 @@ namespace Logic.Queue
 
         #region Private methods
 
-        private void ExtendsContainerInMiddle(ref T[] array, int capacity)
+        private void ExtendsQueueSize()
+        {
+            if (this.tail < this.head)
+            {
+                this.ExtendsContainerTailBehindHead(ref this.container, this.capacity);
+                this.head = 0;
+                this.tail = this.Count - 1;
+            }
+            else
+            {
+                this.ExtendsContainerRigthSide(ref this.container, this.capacity);
+            }
+        }
+
+        private void ExtendsContainerTailBehindHead(ref T[] array, int capacity)
         {
             T[] newArray = new T[array.Length + capacity];
-            int indexOldArray = 0;
-            int indexNewArray = 0;
-
-            while (indexOldArray < array.Length)
-            {
-                if (indexOldArray - 1 == this.tail)
-                {
-                    indexNewArray = indexNewArray + capacity;
-                }
-
-                newArray[indexNewArray] = array[indexOldArray];
-                indexOldArray++;
-                indexNewArray++;
-            }
-
+            Array.Copy(array, this.head, newArray, 0, this.container.Length - this.head);
+            Array.Copy(array, 0, newArray, this.container.Length - this.head, this.tail + 1);
             array = newArray;
+            //int indexOldArray = 0;
+            //int indexNewArray = 0;
+
+            //while (indexOldArray < array.Length)
+            //{
+            //    if (indexOldArray - 1 == this.tail)
+            //    {
+            //        indexNewArray = indexNewArray + capacity;
+            //    }
+
+            //    newArray[indexNewArray] = array[indexOldArray];
+            //    indexOldArray++;
+            //    indexNewArray++;
+            //}
+
+            //array = newArray;
         }
 
         private void ExtendsContainerRigthSide(ref T[] array, int capacity)

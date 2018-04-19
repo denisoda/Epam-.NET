@@ -12,24 +12,29 @@ namespace Logic.UnitTests.Queue
         [Test]
         public void QueueViaWiseArrayTests_Time()
         {
-            QueueViaWiseArray<string> queue = new QueueViaWiseArray<string>(30);
-
+            QueueViaWiseArray<string> queue = new QueueViaWiseArray<string>(2);
 
             Stopwatch stopwatch = Stopwatch.StartNew();
-            for (int i = 0; i < 10000; i++)
-            {
-                queue.Enqueue("A");
-            }
 
-            for (int i = 0; i < 1000; i++)
-            {
-                queue.Dequeue();
-            }
+            queue.Enqueue("A");
+            queue.Enqueue("B");
+            queue.Dequeue();
+            queue.Enqueue("C");
+            queue.Enqueue("D");
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    queue.Enqueue("A");
+            //}
 
-            for (int i = 0; i < 500; i++)
-            {
-                queue.Enqueue("A");
-            }         
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    queue.Dequeue();
+            //}
+
+            //for (int i = 0; i < 500; i++)
+            //{
+            //    queue.Enqueue("A");
+            //}         
             stopwatch.Stop();
 
             Assert.Pass(stopwatch.Elapsed.ToString());

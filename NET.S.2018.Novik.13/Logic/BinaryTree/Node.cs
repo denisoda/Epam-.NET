@@ -2,6 +2,10 @@
 
 namespace Logic.BinaryTree
 {
+    /// <summary>
+    /// Provides properties to use this class in <see cref="BinarySearchTree{T}"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of value.</typeparam>
     internal class Node<T>
     {
         public Node(Node<T> left, Node<T> rigth, T value)
