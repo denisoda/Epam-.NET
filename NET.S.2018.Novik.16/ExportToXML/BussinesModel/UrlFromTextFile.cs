@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using ExportToXML.Interface.Interfaces;
 using System.IO;
 
-
 namespace ExportToXML.BussinesModel
 {
-    public class UrlsSource : IURLSource
+    /// <summary>
+    /// Provides methods to get URL from file.
+    /// </summary>
+    public class UrlFromTextFile : IURLSource
     {
         #region Private fields
 
@@ -16,12 +18,19 @@ namespace ExportToXML.BussinesModel
 
         #region Constructors
 
-        public UrlsSource()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UrlFromTextFile"/> class.
+        /// </summary>
+        public UrlFromTextFile()
             : this("source.txt")
         {
         }
 
-        public UrlsSource(string path)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UrlFromTextFile"/> class.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        public UrlFromTextFile(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -35,6 +44,10 @@ namespace ExportToXML.BussinesModel
 
         #region Public methods
 
+        /// <summary>
+        /// Gets the set of URL.
+        /// </summary>
+        /// <returns>set of URL.</returns>
         public IEnumerable<string> GetRows()
         {
             List<string> result = new List<string>();

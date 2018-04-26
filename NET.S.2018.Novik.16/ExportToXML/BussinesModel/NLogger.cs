@@ -4,11 +4,15 @@ using NLog;
 
 namespace ExportToXML.BussinesModel
 {
-    class ConcreateLogger : ICustomeLogger
+    /// <summary>
+    /// Provides methods to work with logger.
+    /// Wrapper NLog.
+    /// </summary>
+    class NLogger : ICustomeLogger
     {
         #region Fields
 
-        private Logger Log = LogManager.GetCurrentClassLogger();
+        private Logger logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
@@ -16,12 +20,12 @@ namespace ExportToXML.BussinesModel
 
         public void Warn(string messsage)
         {
-            Log.Warn(messsage);
+            this.logger.Warn(messsage);
         }
 
         public void Warn(string message, Exception exception)
         {
-            Log.Warn(exception, message);
+            this.logger.Warn(exception, message);
         }
 
         #endregion

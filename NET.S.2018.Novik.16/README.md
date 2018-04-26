@@ -1,4 +1,4 @@
-﻿#Задание
+﻿## Задание
 В текстовом файле построчно хранится информация о URL-адресах,
 представленных в виде &lt;scheme&gt;://&lt;host&gt;/&lt;URL‐path&gt;?&lt;parameters&gt;, где сегмент
 parameters - это набор пар вида key=value, при этом сегменты URL‐path и parameters

@@ -4,6 +4,9 @@ using Ninject;
 
 namespace DependencyResolver
 {
+    /// <summary>
+    /// Settings <see cref="IKernel"/>.
+    /// </summary>
     public class NinjectConfig
     {
         public IKernel Kernel { get; private set; }
@@ -12,9 +15,9 @@ namespace DependencyResolver
         {
             this.Kernel = new StandardKernel();
             this.Kernel.Bind<IURLHelper>().To<UrlHelper>();
-            this.Kernel.Bind<IURLSource>().To<UrlsSource>();
+            this.Kernel.Bind<IURLSource>().To<UrlFromTextFile>();
             this.Kernel.Bind<IXMLSaver>().To<XmlSaver>();
-            this.Kernel.Bind<IXMLConverter>().To<UrlToXml>();
+            this.Kernel.Bind<IXMLConverter>().To<ConverterURLtoXML>();
         }
     }
 }

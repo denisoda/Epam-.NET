@@ -1,15 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using ExportToXML.Interface.Interfaces;
 
 namespace ExportToXML.BussinesModel
 {
+    /// <summary>
+    /// Provides methods to work with URL.
+    /// </summary>
     public class UrlHelper : IURLHelper
     {
+        #region Public methods
+
+        /// <summary>
+        /// Checks if the <paramref name="url"/> is valid.
+        /// </summary>
+        /// <param name="url">Url to check.</param>
+        /// <returns>Bool.</returns>
         public bool IsValid(string url)
         {
-            return true;
+            const string patternValidUrl = @"^http(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$";
+            return Regex.IsMatch(url, patternValidUrl);
         }
 
+        /// <summary>
+        /// Gets the host of the <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">Url.</param>
+        /// <returns>The host of url as string.</returns>
         public string GetHost(string url)
         {
             int startHostName = url.IndexOf('/', 0) + 2;
@@ -19,6 +36,11 @@ namespace ExportToXML.BussinesModel
             return value;
         }
 
+        /// <summary>
+        /// Gets sequence of uri from <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">Url to extract uri.</param>
+        /// <returns>Sequence of uri.</returns>
         public IEnumerable<string> GetUri(string url)
         {
             const string separator = "/";
@@ -39,7 +61,12 @@ namespace ExportToXML.BussinesModel
             return result;
         }
 
-        public Dictionary<string,string> GetParameters(string url)
+        /// <summary>
+        /// Gets dictionary parameters from <paramref name="url"/> as key and value.
+        /// </summary>
+        /// <param name="url">Url to extract.</param>
+        /// <returns>Dictionary parameters.</returns>
+        public Dictionary<string, string> GetParameters(string url)
         {
             const string separator = "&";
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -59,5 +86,7 @@ namespace ExportToXML.BussinesModel
 
             return result;
         }
+
+        #endregion
     }
 }
