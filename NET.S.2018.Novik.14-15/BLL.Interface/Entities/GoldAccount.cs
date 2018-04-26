@@ -43,7 +43,7 @@ namespace BLL.Interface.Entities
 
         public override int BonusPointsDeposit { get; protected set; } = 3;
 
-        public override int BonusPointsWithdraw { get; protected set; } = 4;
+        public override int BonusPointsWithdraw { get; protected set; } = 2;
 
         public override TypeBankAccount Type { get; } = TypeBankAccount.Golden;
 

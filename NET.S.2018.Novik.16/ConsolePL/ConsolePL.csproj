@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF9726E8-D19F-49CA-AEFC-14FA0FF2ABEE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLL.Interface</RootNamespace>
-    <AssemblyName>BLL.Interface</AssemblyName>
+    <ProjectGuid>{723357DD-8E59-45AE-A055-8485D414DFBE}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsolePL</RootNamespace>
+    <AssemblyName>ConsolePL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,25 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\BankAccount.cs" />
-    <Compile Include="Entities\BaseAccount.cs" />
-    <Compile Include="Entities\GoldAccount.cs" />
-    <Compile Include="Entities\PlatinumAccount.cs" />
-    <Compile Include="Entities\TypeBankAccount.cs" />
-    <Compile Include="Exceptions\NotEnoughMoneyException.cs" />
-    <Compile Include="Interfaces\IBankAccountFactory.cs" />
-    <Compile Include="Interfaces\IBankAccountMapper.cs" />
-    <Compile Include="Interfaces\IBankAccountService.cs" />
-    <Compile Include="Interfaces\ICalculatorBonusPoints.cs" />
-    <Compile Include="Interfaces\IGeneratorId.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <ProjectReference Include="..\DependencyResolver\DependencyResolver.csproj">
+      <Project>{3ce7a4ab-20f7-4c79-b1b7-33af112853da}</Project>
+      <Name>DependencyResolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExportToXML.Interface\ExportToXML.Interface.csproj">
+      <Project>{bca11b6a-a58b-4595-96b5-ffa3bb6918ef}</Project>
+      <Name>ExportToXML.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
